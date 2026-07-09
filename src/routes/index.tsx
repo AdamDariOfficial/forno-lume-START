@@ -229,11 +229,10 @@ function OfferSection() {
         {site.offer.map((o, i) => {
           const Icon = offerIcons[i] ?? Leaf;
           return (
-            <article
-              key={o.title}
-              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 transition hover:-translate-y-1 hover:shadow-[var(--shadow-warm)] md:p-8"
+            <Reveal key={o.title} as="article" delay={i * 120}
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 transition duration-500 hover:-translate-y-1 hover:border-terracotta/40 hover:shadow-[var(--shadow-warm)] md:p-8"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta transition-transform duration-500 group-hover:scale-110">
                 <Icon className="h-5 w-5" />
               </div>
               <h3 className="mt-6 font-display text-2xl leading-tight">
@@ -246,7 +245,7 @@ function OfferSection() {
                 <span className="h-px w-6 bg-terracotta" />
                 {o.detail}
               </div>
-            </article>
+            </Reveal>
           );
         })}
       </div>
