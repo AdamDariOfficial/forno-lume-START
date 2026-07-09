@@ -592,11 +592,7 @@ function FAQSection() {
             </p>
           </div>
           <div className="md:col-span-8">
-            <ul className="divide-y divide-border">
-              {site.faq.map((f, i) => (
-                <FAQItem key={f.q} q={f.q} a={f.a} defaultOpen={i === 0} />
-              ))}
-            </ul>
+            <FAQList items={site.faq} />
           </div>
         </div>
       </div>
@@ -604,40 +600,51 @@ function FAQSection() {
   );
 }
 
-function FAQItem({
-  q,
-  a,
-  defaultOpen,
-}: {
-  q: string;
-  a: string;
-  defaultOpen?: boolean;
-}) {
-  const [open, setOpen] = useState(!!defaultOpen);
+function FAQList({ items }: { items: readonly { q: string; a: string }[] }) {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
   return (
-    <li>
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="flex w-full items-center justify-between gap-6 py-6 text-left"
-      >
-        <span className="font-display text-lg md:text-xl">{q}</span>
-        <ChevronDown
-          className={`h-5 w-5 shrink-0 text-terracotta transition-transform duration-300 ${
-            open ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-      <div
-        className={`grid overflow-hidden transition-all duration-300 ease-out ${
-          open ? "grid-rows-[1fr] pb-6" : "grid-rows-[0fr]"
-        }`}
-      >
-        <div className="min-h-0">
-          <p className="max-w-2xl text-[15px] text-muted-foreground">{a}</p>
-        </div>
-      </div>
-    </li>
+    <ul className="divide-y divide-border">
+      {items.map((f, i) => {
+        const open = openIndex === i;
+        const panelId = `faq-panel-${i}`;
+        const btnId = `faq-btn-${i}`;
+        return (
+          <li key={f.q}>
+            <button
+              id={btnId}
+              type="button"
+              onClick={() => setOpenIndex(open ? null : i)}
+              aria-expanded={open}
+              aria-controls={panelId}
+              className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left transition-colors hover:text-terracotta"
+            >
+              <span className="font-display text-lg md:text-xl">{f.q}</span>
+              <span
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-terracotta transition-all duration-300 ${
+                  open ? "rotate-180 bg-terracotta/10" : "rotate-0"
+                }`}
+              >
+                <ChevronDown className="h-4 w-4" />
+              </span>
+            </button>
+            <div
+              id={panelId}
+              role="region"
+              aria-labelledby={btnId}
+              className={`grid overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                open ? "grid-rows-[1fr] pb-6 opacity-100" : "grid-rows-[0fr] opacity-0"
+              }`}
+            >
+              <div className="min-h-0">
+                <p className="max-w-2xl text-[15px] text-muted-foreground">
+                  {f.a}
+                </p>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
+
