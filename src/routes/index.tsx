@@ -504,74 +504,43 @@ function PracticalInfo() {
         </div>
 
         <div className="md:col-span-7">
-          <div
-            className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border md:aspect-[5/4]"
-            style={{
-              background:
-                "linear-gradient(160deg, oklch(0.92 0.03 82) 0%, oklch(0.86 0.04 80) 100%)",
-            }}
-          >
-            {/* stylised map */}
-            <svg
-              aria-hidden
-              className="absolute inset-0 h-full w-full opacity-70"
-              viewBox="0 0 800 600"
-              preserveAspectRatio="xMidYMid slice"
+          <div className="group relative overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
+            <div className="relative aspect-[4/3] md:aspect-[5/4]">
+              <iframe
+                title={site.contact.mapTitle}
+                src={site.contact.mapEmbedUrl}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            </div>
+            <a
+              href={site.contact.mapExternalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-4 rounded-2xl bg-card/95 p-4 backdrop-blur transition hover:bg-card"
             >
-              <defs>
-                <pattern
-                  id="grid"
-                  width="60"
-                  height="60"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path
-                    d="M60 0H0V60"
-                    fill="none"
-                    stroke="oklch(0.78 0.04 75)"
-                    strokeWidth="1"
-                  />
-                </pattern>
-              </defs>
-              <rect width="800" height="600" fill="url(#grid)" />
-              <path
-                d="M0 380 C 150 340, 260 420, 400 360 S 700 300, 800 340"
-                stroke="oklch(0.65 0.08 55)"
-                strokeWidth="6"
-                fill="none"
-                strokeLinecap="round"
-              />
-              <path
-                d="M120 100 L 260 200 L 380 180 L 500 260 L 660 220"
-                stroke="oklch(0.72 0.05 90)"
-                strokeWidth="3"
-                fill="none"
-                strokeDasharray="6 8"
-              />
-            </svg>
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-terracotta text-primary-foreground shadow-[var(--shadow-warm)]">
-                <MapPin className="h-6 w-6" />
-              </div>
-              <p className="mt-4 font-display text-2xl">Forno Lume</p>
-              <p className="text-sm text-muted-foreground">
-                {site.contact.address}
-              </p>
-            </div>
-            <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-card/95 p-4 backdrop-blur">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">
-                Prenotazione consigliata
-              </p>
-              <p className="mt-1 text-sm">
-                Scrivici su WhatsApp per confermare disponibilità e orari.
-              </p>
-            </div>
+              <span>
+                <span className="block text-xs uppercase tracking-widest text-muted-foreground">
+                  Come raggiungerci
+                </span>
+                <span className="mt-1 block text-sm">
+                  {site.contact.address}
+                </span>
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
+                Apri su Google Maps
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
+            </a>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
 
 function InfoRow({
   icon: Icon,
