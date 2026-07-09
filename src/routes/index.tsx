@@ -506,33 +506,56 @@ function PracticalInfo() {
         </div>
 
         <div className="md:col-span-7">
-          <div className="group relative overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
-            <div className="relative aspect-[4/3] md:aspect-[5/4]">
-              <iframe
-                title={site.contact.mapTitle}
-                src={site.contact.mapEmbedUrl}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-                className="absolute inset-0 h-full w-full border-0"
-              />
+          <div className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
+            <div className="relative">
+              <div className="relative aspect-[4/3] min-h-[280px] sm:aspect-[16/10] md:aspect-[5/4] md:min-h-0">
+                <iframe
+                  title={site.contact.mapTitle}
+                  src={site.contact.mapEmbedUrl}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full border-0"
+                />
+              </div>
+              {/* Desktop overlay card */}
+              <a
+                href={site.contact.mapExternalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-4 left-4 right-4 hidden items-center justify-between gap-4 rounded-2xl bg-card/95 p-4 backdrop-blur transition hover:bg-card md:flex"
+              >
+                <span>
+                  <span className="block text-xs uppercase tracking-widest text-muted-foreground">
+                    Come raggiungerci
+                  </span>
+                  <span className="mt-1 block text-sm">
+                    {site.contact.address}
+                  </span>
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
+                  Apri su Google Maps
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </span>
+              </a>
             </div>
+            {/* Mobile inline card below map (keeps map fully visible) */}
             <a
               href={site.contact.mapExternalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-4 rounded-2xl bg-card/95 p-4 backdrop-blur transition hover:bg-card"
+              className="flex items-center justify-between gap-4 border-t border-border bg-card p-4 transition hover:bg-secondary/60 md:hidden"
             >
-              <span>
+              <span className="min-w-0">
                 <span className="block text-xs uppercase tracking-widest text-muted-foreground">
                   Come raggiungerci
                 </span>
-                <span className="mt-1 block text-sm">
+                <span className="mt-1 block truncate text-sm">
                   {site.contact.address}
                 </span>
               </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
-                Apri su Google Maps
+              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
+                Apri su Maps
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </span>
             </a>
