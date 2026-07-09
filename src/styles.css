@@ -138,14 +138,14 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--muted-foreground);
-}
 
-@utility eyebrow::before {
-  content: "";
-  display: inline-block;
-  width: 1.5rem;
-  height: 1px;
-  background-color: var(--terracotta);
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 1.5rem;
+    height: 1px;
+    background-color: var(--terracotta);
+  }
 }
 
 @utility hairline {
