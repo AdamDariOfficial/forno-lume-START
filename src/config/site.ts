@@ -27,8 +27,6 @@ export const site = {
     mapExternalUrl:
       "https://www.google.com/maps/search/?api=1&query=Via%20Roma%2024%2C%20Padova",
   },
-    hours: "Mar–Dom 18:30–23:00 · Lun chiuso",
-  },
   nav: [
     { href: "#esperienza", label: "Esperienza" },
     { href: "#menu", label: "Menu" },
