@@ -394,7 +394,7 @@ function MethodSection() {
         </div>
         <div className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
           {site.experience.map((s, i) => (
-            <div key={s.step} className="relative">
+            <Reveal key={s.step} delay={i * 140} className="relative">
               <div className="flex items-center gap-4">
                 <span className="font-display text-4xl text-terracotta">
                   {s.step}
@@ -412,7 +412,7 @@ function MethodSection() {
               <p className="mt-2 text-sm text-muted-foreground md:text-[15px]">
                 {s.body}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
