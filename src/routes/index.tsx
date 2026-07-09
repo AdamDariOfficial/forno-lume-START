@@ -278,9 +278,11 @@ function MenuPreview() {
 
         <div className="mt-12 grid gap-10 md:grid-cols-12">
           <ul className="md:col-span-7 divide-y divide-border/70">
-            {site.menu.map((m) => (
-              <li
+            {site.menu.map((m, i) => (
+              <Reveal
                 key={m.name}
+                as="li"
+                delay={i * 70}
                 className="grid grid-cols-[1fr_auto] items-baseline gap-4 py-5"
               >
                 <div className="min-w-0">
@@ -292,7 +294,7 @@ function MenuPreview() {
                 <span className="shrink-0 font-display text-lg text-terracotta">
                   €{m.price}
                 </span>
-              </li>
+              </Reveal>
             ))}
           </ul>
 
