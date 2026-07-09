@@ -77,25 +77,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Forno Lume | Bistrot e pizzeria contemporanea" },
+      { title: "Forno Lume | Bistrot e pizzeria contemporanea a Padova" },
       {
         name: "description",
         content:
-          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda.",
+          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
       },
       { name: "theme-color", content: "#f5efe1" },
       {
         property: "og:title",
-        content: "Forno Lume | Bistrot e pizzeria contemporanea",
+        content: "Forno Lume | Bistrot e pizzeria contemporanea a Padova",
       },
       {
         property: "og:description",
         content:
-          "Cucina semplice, atmosfera calda, dettagli curati. Prenota un tavolo da Forno Lume.",
+          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
       },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Forno Lume" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Forno Lume | Bistrot e pizzeria contemporanea a Padova" },
+      { name: "twitter:description", content: "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6831ef5d-985d-49ac-ae77-2d405cad0a8e/id-preview-af3c2c23--28508969-e2c4-48f3-b826-910ffbf62e12.lovable.app-1783637961222.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6831ef5d-985d-49ac-ae77-2d405cad0a8e/id-preview-af3c2c23--28508969-e2c4-48f3-b826-910ffbf62e12.lovable.app-1783637961222.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

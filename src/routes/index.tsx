@@ -31,12 +31,12 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "Forno Lume | Bistrot e pizzeria contemporanea",
+        content: "Forno Lume | Bistrot e pizzeria contemporanea a Padova",
       },
       {
         property: "og:description",
         content:
-          "Cucina semplice, atmosfera calda, dettagli curati. Prenota un tavolo da Forno Lume.",
+          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
