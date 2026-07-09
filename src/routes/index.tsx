@@ -270,8 +270,9 @@ function MenuPreview() {
             </h2>
           </div>
           <p className="max-w-md text-sm text-muted-foreground md:text-[15px]">
-            Il menu cambia in base alla stagione e alla disponibilità degli
-            ingredienti. Scrivici per ricevere la proposta aggiornata.
+            Una selezione essenziale delle proposte più rappresentative di
+            Forno Lume: piatti semplici, lievitati curati e piccoli assaggi
+            pensati per accompagnare la serata.
           </p>
         </div>
 
