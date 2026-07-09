@@ -39,12 +39,16 @@ function CookiePage() {
         di navigazione). Non richiedono consenso preventivo.
       </p>
 
-      <h2>Servizi esterni</h2>
+      <h2>Servizi esterni e contenuti incorporati</h2>
       <p>
         Alcuni link portano a servizi esterni come WhatsApp o al client email
-        del dispositivo. Questi servizi hanno proprie policy in materia di
-        cookie e trattamento dei dati, che è possibile consultare direttamente
-        sui loro siti.
+        del dispositivo. Inoltre, nella sezione "Dove siamo" è incorporata una
+        mappa di Google Maps tramite iframe, che consente di visualizzare la
+        posizione del locale e aprirla su Google Maps. L'utilizzo di questi
+        servizi esterni può comportare l'impostazione di cookie o il
+        trattamento di dati (ad esempio indirizzo IP) da parte dei rispettivi
+        provider, secondo le loro policy, consultabili direttamente sui loro
+        siti.
       </p>
 
       <h2>Gestione delle preferenze</h2>

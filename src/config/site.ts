@@ -21,6 +21,11 @@ export const site = {
     phone: "+39 000 000 0000",
     address: "Via Roma 24, Padova",
     hours: "Mar–Dom 18:30–23:00 · Lun chiuso",
+    mapTitle: "Mappa: Forno Lume — Via Roma 24, Padova",
+    mapEmbedUrl:
+      "https://www.google.com/maps?q=Via%20Roma%2024%2C%20Padova&output=embed",
+    mapExternalUrl:
+      "https://www.google.com/maps/search/?api=1&query=Via%20Roma%2024%2C%20Padova",
   },
   nav: [
     { href: "#esperienza", label: "Esperienza" },

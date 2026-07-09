@@ -19,6 +19,7 @@ import dishImg from "@/assets/dish.jpg";
 import { site, waLink, mailLink, telLink } from "@/config/site";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
+import { Reveal } from "@/components/site/Reveal";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -228,11 +229,10 @@ function OfferSection() {
         {site.offer.map((o, i) => {
           const Icon = offerIcons[i] ?? Leaf;
           return (
-            <article
-              key={o.title}
-              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 transition hover:-translate-y-1 hover:shadow-[var(--shadow-warm)] md:p-8"
+            <Reveal key={o.title} as="article" delay={i * 120}
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 transition duration-500 hover:-translate-y-1 hover:border-terracotta/40 hover:shadow-[var(--shadow-warm)] md:p-8"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta transition-transform duration-500 group-hover:scale-110">
                 <Icon className="h-5 w-5" />
               </div>
               <h3 className="mt-6 font-display text-2xl leading-tight">
@@ -245,7 +245,7 @@ function OfferSection() {
                 <span className="h-px w-6 bg-terracotta" />
                 {o.detail}
               </div>
-            </article>
+            </Reveal>
           );
         })}
       </div>
@@ -270,16 +270,19 @@ function MenuPreview() {
             </h2>
           </div>
           <p className="max-w-md text-sm text-muted-foreground md:text-[15px]">
-            Il menu cambia in base alla stagione e alla disponibilità degli
-            ingredienti. Scrivici per ricevere la proposta aggiornata.
+            Una selezione essenziale delle proposte più rappresentative di
+            Forno Lume: piatti semplici, lievitati curati e piccoli assaggi
+            pensati per accompagnare la serata.
           </p>
         </div>
 
         <div className="mt-12 grid gap-10 md:grid-cols-12">
           <ul className="md:col-span-7 divide-y divide-border/70">
-            {site.menu.map((m) => (
-              <li
+            {site.menu.map((m, i) => (
+              <Reveal
                 key={m.name}
+                as="li"
+                delay={i * 70}
                 className="grid grid-cols-[1fr_auto] items-baseline gap-4 py-5"
               >
                 <div className="min-w-0">
@@ -291,7 +294,7 @@ function MenuPreview() {
                 <span className="shrink-0 font-display text-lg text-terracotta">
                   €{m.price}
                 </span>
-              </li>
+              </Reveal>
             ))}
           </ul>
 
@@ -307,16 +310,17 @@ function MenuPreview() {
               />
               <div className="bg-card p-6">
                 <p className="text-sm text-muted-foreground">
-                  Il menu completo è disponibile in sede o su richiesta.
+                  Vuoi scoprire cosa c'è in carta questa sera? Scrivici per
+                  prenotare il tuo tavolo.
                 </p>
                 <a
-                  href={waLink(site.contact.whatsappMenuMessage)}
+                  href={waLink(site.contact.whatsappReserveMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 hover:-translate-y-0.5"
                 >
                   <MessageCircle className="h-4 w-4" />
-                  Richiedi il menu su WhatsApp
+                  Prenota un tavolo
                 </a>
               </div>
             </div>
@@ -390,7 +394,7 @@ function MethodSection() {
         </div>
         <div className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
           {site.experience.map((s, i) => (
-            <div key={s.step} className="relative">
+            <Reveal key={s.step} delay={i * 140} className="relative">
               <div className="flex items-center gap-4">
                 <span className="font-display text-4xl text-terracotta">
                   {s.step}
@@ -408,7 +412,7 @@ function MethodSection() {
               <p className="mt-2 text-sm text-muted-foreground md:text-[15px]">
                 {s.body}
               </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -502,74 +506,43 @@ function PracticalInfo() {
         </div>
 
         <div className="md:col-span-7">
-          <div
-            className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border md:aspect-[5/4]"
-            style={{
-              background:
-                "linear-gradient(160deg, oklch(0.92 0.03 82) 0%, oklch(0.86 0.04 80) 100%)",
-            }}
-          >
-            {/* stylised map */}
-            <svg
-              aria-hidden
-              className="absolute inset-0 h-full w-full opacity-70"
-              viewBox="0 0 800 600"
-              preserveAspectRatio="xMidYMid slice"
+          <div className="group relative overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
+            <div className="relative aspect-[4/3] md:aspect-[5/4]">
+              <iframe
+                title={site.contact.mapTitle}
+                src={site.contact.mapEmbedUrl}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            </div>
+            <a
+              href={site.contact.mapExternalUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-4 rounded-2xl bg-card/95 p-4 backdrop-blur transition hover:bg-card"
             >
-              <defs>
-                <pattern
-                  id="grid"
-                  width="60"
-                  height="60"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path
-                    d="M60 0H0V60"
-                    fill="none"
-                    stroke="oklch(0.78 0.04 75)"
-                    strokeWidth="1"
-                  />
-                </pattern>
-              </defs>
-              <rect width="800" height="600" fill="url(#grid)" />
-              <path
-                d="M0 380 C 150 340, 260 420, 400 360 S 700 300, 800 340"
-                stroke="oklch(0.65 0.08 55)"
-                strokeWidth="6"
-                fill="none"
-                strokeLinecap="round"
-              />
-              <path
-                d="M120 100 L 260 200 L 380 180 L 500 260 L 660 220"
-                stroke="oklch(0.72 0.05 90)"
-                strokeWidth="3"
-                fill="none"
-                strokeDasharray="6 8"
-              />
-            </svg>
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-terracotta text-primary-foreground shadow-[var(--shadow-warm)]">
-                <MapPin className="h-6 w-6" />
-              </div>
-              <p className="mt-4 font-display text-2xl">Forno Lume</p>
-              <p className="text-sm text-muted-foreground">
-                {site.contact.address}
-              </p>
-            </div>
-            <div className="absolute bottom-4 left-4 right-4 rounded-2xl bg-card/95 p-4 backdrop-blur">
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">
-                Prenotazione consigliata
-              </p>
-              <p className="mt-1 text-sm">
-                Scrivici su WhatsApp per confermare disponibilità e orari.
-              </p>
-            </div>
+              <span>
+                <span className="block text-xs uppercase tracking-widest text-muted-foreground">
+                  Come raggiungerci
+                </span>
+                <span className="mt-1 block text-sm">
+                  {site.contact.address}
+                </span>
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
+                Apri su Google Maps
+                <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
+            </a>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
 
 function InfoRow({
   icon: Icon,
@@ -621,11 +594,7 @@ function FAQSection() {
             </p>
           </div>
           <div className="md:col-span-8">
-            <ul className="divide-y divide-border">
-              {site.faq.map((f, i) => (
-                <FAQItem key={f.q} q={f.q} a={f.a} defaultOpen={i === 0} />
-              ))}
-            </ul>
+            <FAQList items={site.faq} />
           </div>
         </div>
       </div>
@@ -633,40 +602,51 @@ function FAQSection() {
   );
 }
 
-function FAQItem({
-  q,
-  a,
-  defaultOpen,
-}: {
-  q: string;
-  a: string;
-  defaultOpen?: boolean;
-}) {
-  const [open, setOpen] = useState(!!defaultOpen);
+function FAQList({ items }: { items: readonly { q: string; a: string }[] }) {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
   return (
-    <li>
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className="flex w-full items-center justify-between gap-6 py-6 text-left"
-      >
-        <span className="font-display text-lg md:text-xl">{q}</span>
-        <ChevronDown
-          className={`h-5 w-5 shrink-0 text-terracotta transition-transform duration-300 ${
-            open ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-      <div
-        className={`grid overflow-hidden transition-all duration-300 ease-out ${
-          open ? "grid-rows-[1fr] pb-6" : "grid-rows-[0fr]"
-        }`}
-      >
-        <div className="min-h-0">
-          <p className="max-w-2xl text-[15px] text-muted-foreground">{a}</p>
-        </div>
-      </div>
-    </li>
+    <ul className="divide-y divide-border">
+      {items.map((f, i) => {
+        const open = openIndex === i;
+        const panelId = `faq-panel-${i}`;
+        const btnId = `faq-btn-${i}`;
+        return (
+          <li key={f.q}>
+            <button
+              id={btnId}
+              type="button"
+              onClick={() => setOpenIndex(open ? null : i)}
+              aria-expanded={open}
+              aria-controls={panelId}
+              className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left transition-colors hover:text-terracotta"
+            >
+              <span className="font-display text-lg md:text-xl">{f.q}</span>
+              <span
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-terracotta transition-all duration-300 ${
+                  open ? "rotate-180 bg-terracotta/10" : "rotate-0"
+                }`}
+              >
+                <ChevronDown className="h-4 w-4" />
+              </span>
+            </button>
+            <div
+              id={panelId}
+              role="region"
+              aria-labelledby={btnId}
+              className={`grid overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                open ? "grid-rows-[1fr] pb-6 opacity-100" : "grid-rows-[0fr] opacity-0"
+              }`}
+            >
+              <div className="min-h-0">
+                <p className="max-w-2xl text-[15px] text-muted-foreground">
+                  {f.a}
+                </p>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }
+
