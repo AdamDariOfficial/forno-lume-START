@@ -308,16 +308,17 @@ function MenuPreview() {
               />
               <div className="bg-card p-6">
                 <p className="text-sm text-muted-foreground">
-                  Il menu completo è disponibile in sede o su richiesta.
+                  Vuoi scoprire cosa c'è in carta questa sera? Scrivici per
+                  prenotare il tuo tavolo.
                 </p>
                 <a
-                  href={waLink(site.contact.whatsappMenuMessage)}
+                  href={waLink(site.contact.whatsappReserveMessage)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 hover:-translate-y-0.5"
                 >
                   <MessageCircle className="h-4 w-4" />
-                  Richiedi il menu su WhatsApp
+                  Prenota un tavolo
                 </a>
               </div>
             </div>
