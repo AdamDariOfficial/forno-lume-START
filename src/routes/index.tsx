@@ -11,7 +11,8 @@ import {
   Wine,
   ChevronDown,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter, useRouterState } from "@tanstack/react-router";
 
 import heroImg from "@/assets/hero.jpg";
 import aboutImg from "@/assets/about.jpg";
@@ -20,6 +21,7 @@ import { site, waLink, mailLink, telLink } from "@/config/site";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
+import { scrollToSection } from "@/lib/nav";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -71,6 +73,29 @@ export const Route = createFileRoute("/")({
 const offerIcons = [Leaf, Flame, Wine];
 
 function HomePage() {
+  const router = useRouter();
+  const scrollTo = useRouterState({
+    select: (s) => (s.location.state as { scrollTo?: string } | undefined)?.scrollTo,
+  });
+
+  useEffect(() => {
+    if (!scrollTo) return;
+    // Wait a frame so the target section is mounted, then scroll and clear state.
+    const id = scrollTo;
+    const t = window.setTimeout(() => {
+      scrollToSection(id);
+      router.navigate({
+        to: ".",
+        replace: true,
+        state: (prev) => {
+          const { scrollTo: _drop, ...rest } = (prev ?? {}) as unknown as Record<string, unknown>;
+          return rest as never;
+        },
+      });
+    }, 60);
+    return () => window.clearTimeout(t);
+  }, [scrollTo, router]);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -230,9 +255,9 @@ function OfferSection() {
           const Icon = offerIcons[i] ?? Leaf;
           return (
             <Reveal key={o.title} as="article" delay={i * 120}
-              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 transition duration-500 hover:-translate-y-1 hover:border-terracotta/40 hover:shadow-[var(--shadow-warm)] md:p-8"
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 transition-[border-color,box-shadow,background-color,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:p-8 md:hover:-translate-y-[2px] md:hover:border-terracotta/30 md:hover:bg-card md:hover:shadow-[var(--shadow-soft)]"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta transition-transform duration-500 group-hover:scale-110">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
                 <Icon className="h-5 w-5" />
               </div>
               <h3 className="mt-6 font-display text-2xl leading-tight">

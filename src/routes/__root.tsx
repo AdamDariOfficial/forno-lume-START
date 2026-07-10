@@ -12,24 +12,29 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
+import { Navbar } from "../components/site/Navbar";
+
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-6">
-      <div className="max-w-lg text-center">
-        <p className="eyebrow justify-center">Errore 404</p>
-        <h1 className="mt-5 text-4xl font-medium sm:text-5xl">
-          Questa pagina non è nel menu.
-        </h1>
-        <p className="mt-4 text-base text-muted-foreground">
-          Torniamo alla sala principale.
-        </p>
-        <div className="mt-8">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium tracking-wide text-primary-foreground transition hover:opacity-90"
-          >
-            Torna alla home
-          </Link>
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <div className="flex min-h-screen items-center justify-center px-6">
+        <div className="max-w-lg text-center">
+          <p className="eyebrow justify-center">Errore 404</p>
+          <h1 className="mt-5 text-4xl font-medium sm:text-5xl">
+            Questa pagina non è nel menu.
+          </h1>
+          <p className="mt-4 text-base text-muted-foreground">
+            Torniamo alla sala principale.
+          </p>
+          <div className="mt-8">
+            <Link
+              to="/"
+              className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium tracking-wide text-primary-foreground transition hover:opacity-90"
+            >
+              Torna alla home
+            </Link>
+          </div>
         </div>
       </div>
     </div>
