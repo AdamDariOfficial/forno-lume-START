@@ -97,7 +97,7 @@ function HomePage() {
   }, [scrollTo, router]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen overflow-x-clip bg-background">
       <Navbar />
       <main>
         <Hero />
@@ -254,21 +254,23 @@ function OfferSection() {
         {site.offer.map((o, i) => {
           const Icon = offerIcons[i] ?? Leaf;
           return (
-            <Reveal key={o.title} as="article" delay={i * 120}
-              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-7 transition-[border-color,box-shadow,background-color,transform] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] md:p-8 md:hover:-translate-y-[2px] md:hover:border-terracotta/30 md:hover:bg-card md:hover:shadow-[var(--shadow-soft)]"
-            >
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
-                <Icon className="h-5 w-5" />
-              </div>
-              <h3 className="mt-6 font-display text-2xl leading-tight">
-                {o.title}
-              </h3>
-              <p className="mt-3 text-sm text-muted-foreground md:text-[15px]">
-                {o.body}
-              </p>
-              <div className="mt-8 flex items-center gap-2 border-t border-border pt-4 text-xs uppercase tracking-widest text-muted-foreground">
-                <span className="h-px w-6 bg-terracotta" />
-                {o.detail}
+            <Reveal key={o.title} as="article" delay={i * 120}>
+              <div
+                className="group relative h-full overflow-hidden rounded-3xl border border-border bg-card p-7 [transition-property:transform,box-shadow,border-color,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform md:p-8 md:hover:-translate-y-[2px] md:hover:border-terracotta/30 md:hover:shadow-[var(--shadow-soft)]"
+              >
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="mt-6 font-display text-2xl leading-tight">
+                  {o.title}
+                </h3>
+                <p className="mt-3 text-sm text-muted-foreground md:text-[15px]">
+                  {o.body}
+                </p>
+                <div className="mt-8 flex items-center gap-2 border-t border-border pt-4 text-xs uppercase tracking-widest text-muted-foreground">
+                  <span className="h-px w-6 bg-terracotta" />
+                  {o.detail}
+                </div>
               </div>
             </Reveal>
           );
