@@ -122,12 +122,13 @@ export function Navbar() {
   return (
     <header
       aria-hidden={!shown}
-      className={`fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] [will-change:opacity] ${
+      className={`fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] [will-change:opacity,transform] ${
         shown
-          ? "opacity-100 pointer-events-auto"
-          : "opacity-0 pointer-events-none"
-      } motion-reduce:transition-none`}
+          ? "opacity-100 translate-y-0 pointer-events-auto"
+          : "opacity-0 -translate-y-1 pointer-events-none"
+      } motion-reduce:transition-opacity motion-reduce:transform-none`}
     >
+
       <div className="container-page flex h-16 items-center justify-between md:h-20">
         <Link
           to="/"
