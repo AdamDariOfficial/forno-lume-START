@@ -97,7 +97,7 @@ function HomePage() {
   }, [scrollTo, router]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen overflow-x-clip bg-background">
       <Navbar />
       <main>
         <Hero />
