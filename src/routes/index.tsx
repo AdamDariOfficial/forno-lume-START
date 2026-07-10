@@ -11,7 +11,8 @@ import {
   Wine,
   ChevronDown,
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter, useRouterState } from "@tanstack/react-router";
 
 import heroImg from "@/assets/hero.jpg";
 import aboutImg from "@/assets/about.jpg";
@@ -20,6 +21,7 @@ import { site, waLink, mailLink, telLink } from "@/config/site";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
+import { scrollToSection } from "@/lib/nav";
 
 export const Route = createFileRoute("/")({
   head: () => ({
