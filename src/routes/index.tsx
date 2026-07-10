@@ -73,6 +73,29 @@ export const Route = createFileRoute("/")({
 const offerIcons = [Leaf, Flame, Wine];
 
 function HomePage() {
+  const router = useRouter();
+  const scrollTo = useRouterState({
+    select: (s) => (s.location.state as { scrollTo?: string } | undefined)?.scrollTo,
+  });
+
+  useEffect(() => {
+    if (!scrollTo) return;
+    // Wait a frame so the target section is mounted, then scroll and clear state.
+    const id = scrollTo;
+    const t = window.setTimeout(() => {
+      scrollToSection(id);
+      router.navigate({
+        to: ".",
+        replace: true,
+        state: (prev) => {
+          const { scrollTo: _drop, ...rest } = (prev ?? {}) as Record<string, unknown>;
+          return rest as never;
+        },
+      });
+    }, 60);
+    return () => window.clearTimeout(t);
+  }, [scrollTo, router]);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
