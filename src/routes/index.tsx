@@ -88,7 +88,7 @@ function HomePage() {
         to: ".",
         replace: true,
         state: (prev) => {
-          const { scrollTo: _drop, ...rest } = (prev ?? {}) as Record<string, unknown>;
+          const { scrollTo: _drop, ...rest } = (prev ?? {}) as unknown as Record<string, unknown>;
           return rest as never;
         },
       });
