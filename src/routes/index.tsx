@@ -97,7 +97,7 @@ function HomePage() {
   }, [scrollTo, router]);
 
   return (
-    <div className="min-h-screen overflow-x-clip bg-background">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <main>
         <Hero />
@@ -255,13 +255,11 @@ function OfferSection() {
           const Icon = offerIcons[i] ?? Leaf;
           return (
             <Reveal key={o.title} as="article" delay={i * 120}>
-              <div
-                className="group relative h-full overflow-hidden rounded-3xl border border-border bg-card p-7 [transition-property:transform,box-shadow,border-color,background-color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform md:p-8 md:hover:-translate-y-[2px] md:hover:border-terracotta/30 md:hover:shadow-[var(--shadow-soft)]"
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
+              <div className="experience-card relative h-full overflow-hidden rounded-3xl border border-border bg-card p-7 md:p-8">
+                <div className="experience-card-icon flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-6 font-display text-2xl leading-tight">
+                <h3 className="experience-card-title mt-6 font-display text-2xl leading-tight">
                   {o.title}
                 </h3>
                 <p className="mt-3 text-sm text-muted-foreground md:text-[15px]">
@@ -460,7 +458,7 @@ function CTASection() {
       >
         <div
           aria-hidden
-          className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/30 blur-3xl"
+          className="absolute right-0 top-0 h-48 w-48 rounded-full bg-accent/30 blur-3xl md:h-72 md:w-72"
         />
         <div className="relative max-w-2xl text-primary-foreground">
           <p className="eyebrow" style={{ color: "oklch(0.86 0.08 82)" }}>
@@ -506,7 +504,7 @@ function PracticalInfo() {
   return (
     <section id="info" className="container-page pb-20 md:pb-28">
       <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-        <div className="md:col-span-5">
+        <div className="min-w-0 md:col-span-5">
           <p className="eyebrow">Informazioni pratiche</p>
           <h2 className="mt-4 text-4xl font-medium md:text-5xl">Dove siamo</h2>
           <p className="mt-4 text-muted-foreground">
@@ -532,17 +530,17 @@ function PracticalInfo() {
           </dl>
         </div>
 
-        <div className="md:col-span-7">
-          <div className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
-            <div className="relative">
-              <div className="relative aspect-[4/3] min-h-[280px] sm:aspect-[16/10] md:aspect-[5/4] md:min-h-0">
+        <div className="min-w-0 md:col-span-7">
+          <div className="max-w-full overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
+            <div className="relative min-w-0 max-w-full overflow-hidden">
+              <div className="relative min-h-[280px] min-w-0 max-w-full overflow-hidden sm:aspect-[16/10] md:aspect-[5/4] md:min-h-0">
                 <iframe
                   title={site.contact.mapTitle}
                   src={site.contact.mapEmbedUrl}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   allowFullScreen
-                  className="absolute inset-0 h-full w-full border-0"
+                  className="absolute inset-0 block h-full w-full max-w-full border-0"
                 />
               </div>
               {/* Desktop overlay card */}
@@ -571,7 +569,7 @@ function PracticalInfo() {
               href={site.contact.mapExternalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-between gap-4 border-t border-border bg-card p-4 transition hover:bg-secondary/60 md:hidden"
+              className="grid min-w-0 grid-cols-1 gap-3 border-t border-border bg-card p-4 transition hover:bg-secondary/60 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center md:hidden"
             >
               <span className="min-w-0">
                 <span className="block text-xs uppercase tracking-widest text-muted-foreground">
@@ -581,7 +579,7 @@ function PracticalInfo() {
                   {site.contact.address}
                 </span>
               </span>
-              <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
+              <span className="inline-flex w-fit max-w-full items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
                 Apri su Maps
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </span>
