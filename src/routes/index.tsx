@@ -458,7 +458,7 @@ function CTASection() {
       >
         <div
           aria-hidden
-          className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/30 blur-3xl"
+          className="absolute right-0 top-0 h-48 w-48 rounded-full bg-accent/30 blur-3xl md:h-72 md:w-72"
         />
         <div className="relative max-w-2xl text-primary-foreground">
           <p className="eyebrow" style={{ color: "oklch(0.86 0.08 82)" }}>
