@@ -225,6 +225,10 @@
   .fade-up {
     animation: none !important;
   }
+  .experience-card,
+  .experience-card:hover {
+    transform: none !important;
+  }
   html {
     scroll-behavior: auto;
   }
