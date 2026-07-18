@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
   ArrowUpRight,
   Clock,
@@ -11,13 +11,13 @@ import {
   Wine,
   ChevronDown,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { useRouter, useRouterState } from "@tanstack/react-router";
 
 import heroImg from "@/assets/hero.jpg";
 import aboutImg from "@/assets/about.jpg";
 import dishImg from "@/assets/dish.jpg";
-import { site, waLink, mailLink, telLink } from "@/config/site";
+import { SITE_URL, site, waLink, mailLink, telLink } from "@/config/site";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
@@ -42,9 +42,9 @@ export const Route = createFileRoute("/")({
           "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: SITE_URL },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: SITE_URL }],
     scripts: [
       {
         type: "application/ld+json",
@@ -75,7 +75,7 @@ const offerIcons = [Leaf, Flame, Wine];
 function HomePage() {
   const router = useRouter();
   const scrollTo = useRouterState({
-    select: (s) => (s.location.state as { scrollTo?: string } | undefined)?.scrollTo,
+    select: (s) => s.location.state.scrollTo,
   });
 
   useEffect(() => {
@@ -88,9 +88,10 @@ function HomePage() {
         to: ".",
         replace: true,
         state: (prev) => {
-          const { scrollTo: _drop, ...rest } = (prev ?? {}) as unknown as Record<string, unknown>;
-          return rest as never;
+          const { scrollTo: _drop, ...rest } = prev;
+          return rest;
         },
+        resetScroll: false,
       });
     }, 60);
     return () => window.clearTimeout(t);
@@ -118,6 +119,28 @@ function HomePage() {
 
 /* ─────────── Hero ─────────── */
 function Hero() {
+  const navigate = useNavigate();
+
+  const handleMenuClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    void navigate({
+      to: ".",
+      hash: "menu",
+      resetScroll: false,
+      hashScrollIntoView: false,
+    }).then(() => scrollToSection("menu"));
+  };
+
   return (
     <section className="relative overflow-hidden pt-24 md:pt-28">
       {/* soft warm background */}
@@ -156,6 +179,7 @@ function Hero() {
             </a>
             <a
               href="#menu"
+              onClick={handleMenuClick}
               className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3.5 text-sm font-medium transition hover:bg-secondary"
             >
               Scopri il menu

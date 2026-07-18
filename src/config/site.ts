@@ -1,6 +1,8 @@
 // Central config for the Forno Lume demo (Tretnix START template).
 // Change these values to re-skin the demo for another food/hospitality brand.
 
+export const SITE_URL = "https://forno-lume.tretnix.com/";
+
 export const site = {
   brand: {
     name: "Forno Lume",

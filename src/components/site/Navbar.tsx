@@ -237,7 +237,7 @@ export function Navbar() {
     if (isHome) {
       scrollToSection(id);
     } else {
-      navigate({ to: "/", state: { scrollTo: id } as never });
+      navigate({ to: "/", state: { scrollTo: id } });
     }
   };
 

@@ -10,9 +10,13 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import heroImg from "../assets/hero.jpg";
+import { SITE_URL } from "../config/site";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 import { Navbar } from "../components/site/Navbar";
+
+const SOCIAL_IMAGE_URL = new URL(heroImg, SITE_URL).href;
 
 function NotFoundComponent() {
   return (
@@ -103,12 +107,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Forno Lume | Bistrot e pizzeria contemporanea a Padova" },
       { name: "twitter:description", content: "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6831ef5d-985d-49ac-ae77-2d405cad0a8e/id-preview-af3c2c23--28508969-e2c4-48f3-b826-910ffbf62e12.lovable.app-1783637961222.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/6831ef5d-985d-49ac-ae77-2d405cad0a8e/id-preview-af3c2c23--28508969-e2c4-48f3-b826-910ffbf62e12.lovable.app-1783637961222.png" },
+      { property: "og:image", content: SOCIAL_IMAGE_URL },
+      { name: "twitter:image", content: SOCIAL_IMAGE_URL },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
         rel: "preconnect",
