@@ -56,7 +56,12 @@ export function Footer() {
             © {new Date().getFullYear()} {site.legal.company}. Tutti i diritti
             riservati.
           </p>
-          <p className="opacity-70">Demo template by Tretnix</p>
+          <p className="opacity-70">
+            Progettato e sviluppato da{" "}
+            <a className="hover:text-terracotta" href="https://tretnix.com">
+              Tretnix
+            </a>
+          </p>
         </div>
       </div>
     </footer>
