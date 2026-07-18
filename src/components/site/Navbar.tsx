@@ -4,6 +4,26 @@ import { Menu, X } from "lucide-react";
 import { site, waLink } from "@/config/site";
 import { scrollToSection } from "@/lib/nav";
 
+const FOCUSABLE_SELECTOR = [
+  "a[href]",
+  "button:not([disabled])",
+  "input:not([disabled])",
+  "select:not([disabled])",
+  "textarea:not([disabled])",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
+
+function getFocusableElements(container: HTMLElement): HTMLElement[] {
+  return Array.from(
+    container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
+  ).filter(
+    (element) =>
+      !element.closest("[inert]") &&
+      element.getAttribute("aria-hidden") !== "true" &&
+      element.getClientRects().length > 0,
+  );
+}
+
 function idFromHref(href: string): string | null {
   const i = href.indexOf("#");
   return i >= 0 ? href.slice(i + 1) : null;
@@ -16,6 +36,11 @@ export function Navbar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const rafRef = useRef<number | null>(null);
+  const modalRef = useRef<HTMLElement>(null);
+  const menuTriggerRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const restoreFocusRef = useRef(false);
+  const wasOpenRef = useRef(false);
 
   const isHome = pathname === "/";
 
@@ -82,11 +107,107 @@ export function Navbar() {
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 768px)");
     const onChange = (e: MediaQueryListEvent) => {
-      if (e.matches) setOpen(false);
+      if (e.matches) {
+        restoreFocusRef.current = false;
+        setOpen(false);
+      }
     };
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
   }, []);
+
+  // Keep keyboard focus inside the open modal and restore it after closing.
+  useEffect(() => {
+    const modal = modalRef.current;
+    const drawer = drawerRef.current;
+    if (!modal || !drawer) return;
+
+    if (!open) {
+      if (!wasOpenRef.current) return;
+      wasOpenRef.current = false;
+
+      const shouldRestoreFocus = restoreFocusRef.current;
+      restoreFocusRef.current = false;
+
+      const restoreFocusFrame = window.requestAnimationFrame(() => {
+        const trigger = menuTriggerRef.current;
+        if (
+          shouldRestoreFocus &&
+          trigger?.isConnected &&
+          !trigger.closest("[inert]") &&
+          trigger.getClientRects().length > 0
+        ) {
+          trigger.focus({ preventScroll: true });
+          return;
+        }
+
+        const activeElement = document.activeElement;
+        if (activeElement instanceof HTMLElement && modal.contains(activeElement)) {
+          activeElement.blur();
+        }
+      });
+
+      return () => window.cancelAnimationFrame(restoreFocusFrame);
+    }
+
+    wasOpenRef.current = true;
+
+    const focusFrame = window.requestAnimationFrame(() => {
+      const firstFocusable = getFocusableElements(drawer)[0];
+      (firstFocusable ?? drawer).focus({ preventScroll: true });
+    });
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        restoreFocusRef.current = true;
+        setOpen(false);
+        return;
+      }
+
+      if (e.key !== "Tab") return;
+
+      const focusable = getFocusableElements(modal);
+      if (focusable.length === 0) {
+        e.preventDefault();
+        drawer.focus({ preventScroll: true });
+        return;
+      }
+
+      const activeElement = document.activeElement;
+      const activeIndex =
+        activeElement instanceof HTMLElement
+          ? focusable.indexOf(activeElement)
+          : -1;
+
+      if (activeIndex === -1) {
+        e.preventDefault();
+        const target = e.shiftKey ? focusable.at(-1) : focusable[0];
+        target?.focus({ preventScroll: true });
+      } else if (e.shiftKey && activeIndex === 0) {
+        e.preventDefault();
+        focusable.at(-1)?.focus({ preventScroll: true });
+      } else if (!e.shiftKey && activeIndex === focusable.length - 1) {
+        e.preventDefault();
+        focusable[0]?.focus({ preventScroll: true });
+      }
+    };
+
+    const onFocusIn = (e: FocusEvent) => {
+      if (e.target instanceof Node && modal.contains(e.target)) return;
+      const firstFocusable = getFocusableElements(drawer)[0];
+      (firstFocusable ?? drawer).focus({ preventScroll: true });
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("focusin", onFocusIn);
+
+    return () => {
+      window.cancelAnimationFrame(focusFrame);
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("focusin", onFocusIn);
+    };
+  }, [open]);
 
   // Lock body scroll while drawer is open
   useEffect(() => {
@@ -99,7 +220,11 @@ export function Navbar() {
     }
   }, [open]);
 
-  const close = () => setOpen(false);
+  const close = (shouldRestoreFocus = true) => {
+    if (!open) return;
+    restoreFocusRef.current = shouldRestoreFocus;
+    setOpen(false);
+  };
 
   const handleNavClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -121,7 +246,12 @@ export function Navbar() {
 
   return (
     <header
-      aria-hidden={!shown}
+      ref={modalRef}
+      role={open ? "dialog" : undefined}
+      aria-modal={open ? true : undefined}
+      aria-label={open ? "Menu di navigazione" : undefined}
+      aria-hidden={shown ? undefined : true}
+      inert={!shown}
       className={`fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-md transition-[opacity,transform,translate] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] [will-change:opacity,transform] ${
         shown
           ? "opacity-100 translate-y-0 pointer-events-auto"
@@ -132,14 +262,19 @@ export function Navbar() {
       <div className="container-page flex h-16 items-center justify-between md:h-20">
         <Link
           to="/"
-          onClick={close}
+          inert={open}
+          onClick={() => close()}
           className="flex items-center gap-2 font-display text-xl tracking-tight sm:text-2xl"
         >
           <span className="inline-block h-2 w-2 rounded-full bg-terracotta" />
           {site.brand.name}
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Sezioni">
+        <nav
+          inert={open}
+          className="hidden items-center gap-8 md:flex"
+          aria-label="Sezioni"
+        >
           {site.nav.map((n) => {
             const id = idFromHref(n.href);
             const isActive = !!id && active === id;
@@ -171,17 +306,26 @@ export function Navbar() {
           href={waLink(site.contact.whatsappReserveMessage)}
           target="_blank"
           rel="noopener noreferrer"
+          inert={open}
           className="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90 md:inline-flex"
         >
           Prenota un tavolo
         </a>
 
         <button
+          ref={menuTriggerRef}
           type="button"
           aria-label={open ? "Chiudi menu" : "Apri menu"}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            if (open) {
+              close();
+            } else {
+              restoreFocusRef.current = false;
+              setOpen(true);
+            }
+          }}
           className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-background/70 backdrop-blur md:hidden"
         >
           <Menu
@@ -200,7 +344,7 @@ export function Navbar() {
       {/* Overlay */}
       <div
         aria-hidden
-        onClick={close}
+        onClick={() => close()}
         className={`fixed inset-0 top-16 z-40 bg-ink/30 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
@@ -208,7 +352,11 @@ export function Navbar() {
 
       {/* Drawer */}
       <div
+        ref={drawerRef}
         id="mobile-nav"
+        aria-hidden={open ? undefined : true}
+        inert={!open}
+        tabIndex={-1}
         className={`md:hidden absolute inset-x-0 top-full z-50 origin-top overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           open
             ? "max-h-[80vh] opacity-100 translate-y-0"
@@ -247,7 +395,7 @@ export function Navbar() {
               href={waLink(site.contact.whatsappReserveMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={close}
+              onClick={() => close()}
               className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3.5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-warm)]"
             >
               Prenota un tavolo

@@ -670,7 +670,7 @@ function FAQList({ items }: { items: readonly { q: string; a: string }[] }) {
             >
               <span className="font-display text-lg md:text-xl">{f.q}</span>
               <span
-                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-terracotta transition-all duration-300 ${
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-terracotta transition-all duration-300 motion-reduce:transition-none ${
                   open ? "rotate-180 bg-terracotta/10" : "rotate-0"
                 }`}
               >
@@ -681,7 +681,7 @@ function FAQList({ items }: { items: readonly { q: string; a: string }[] }) {
               id={panelId}
               role="region"
               aria-labelledby={btnId}
-              className={`grid overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              className={`grid overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
                 open ? "grid-rows-[1fr] pb-6 opacity-100" : "grid-rows-[0fr] opacity-0"
               }`}
             >
