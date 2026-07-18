@@ -361,7 +361,7 @@ function AboutSection() {
   return (
     <section id="chi-siamo" className="container-page py-20 md:py-28">
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
-        <div className="md:col-span-6">
+        <div className="order-2 md:order-1 md:col-span-6">
           <div className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
             <img
               src={aboutImg}
@@ -373,7 +373,7 @@ function AboutSection() {
             />
           </div>
         </div>
-        <div className="md:col-span-6 md:pt-6">
+        <div className="order-1 md:order-2 md:col-span-6 md:pt-6">
           <p className="eyebrow">Chi siamo</p>
           <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
             Un locale piccolo,
