@@ -337,35 +337,31 @@ function MenuPreview() {
 
           <div className="md:col-span-5">
             <div className="sticky top-24">
-              <div className="overflow-hidden rounded-3xl border border-border">
-                <Reveal>
-                  <img
-                    src={dishImg}
-                    alt="Burrata con pomodorini e basilico servita su ceramica rustica"
-                    loading="lazy"
-                    width={1408}
-                    height={1408}
-                    className="h-72 w-full object-cover md:h-[440px]"
-                  />
-                </Reveal>
+              <Reveal className="overflow-hidden rounded-3xl border border-border">
+                <img
+                  src={dishImg}
+                  alt="Burrata con pomodorini e basilico servita su ceramica rustica"
+                  loading="lazy"
+                  width={1408}
+                  height={1408}
+                  className="h-72 w-full object-cover md:h-[440px]"
+                />
                 <div className="bg-card p-6">
-                  <Reveal delay={80}>
-                    <p className="text-sm text-muted-foreground">
-                      Vuoi scoprire cosa c'è in carta questa sera? Scrivici per
-                      prenotare il tuo tavolo.
-                    </p>
-                    <a
-                      href={waLink(site.contact.whatsappReserveMessage)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 hover:-translate-y-0.5"
-                    >
-                      <MessageCircle className="h-4 w-4" />
-                      Prenota un tavolo
-                    </a>
-                  </Reveal>
+                  <p className="text-sm text-muted-foreground">
+                    Vuoi scoprire cosa c'è in carta questa sera? Scrivici per
+                    prenotare il tuo tavolo.
+                  </p>
+                  <a
+                    href={waLink(site.contact.whatsappReserveMessage)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 hover:-translate-y-0.5"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Prenota un tavolo
+                  </a>
                 </div>
-              </div>
+              </Reveal>
             </div>
           </div>
         </div>
@@ -409,22 +405,20 @@ function AboutSection() {
               inutili.
             </p>
           </Reveal>
-          <Reveal delay={160} className="mt-8">
-            <div className="grid grid-cols-2 gap-6 border-t border-border pt-6">
-              <div>
-                <p className="font-display text-3xl text-terracotta">01</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Un menu essenziale che cambia con le stagioni.
-                </p>
-              </div>
-              <div>
-                <p className="font-display text-3xl text-terracotta">02</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Un servizio che accoglie, senza mai imporsi.
-                </p>
-              </div>
-            </div>
-          </Reveal>
+          <div className="mt-8 grid grid-cols-2 gap-6 border-t border-border pt-6">
+            <Reveal delay={160}>
+              <p className="font-display text-3xl text-terracotta">01</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Un menu essenziale che cambia con le stagioni.
+              </p>
+            </Reveal>
+            <Reveal delay={240}>
+              <p className="font-display text-3xl text-terracotta">02</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Un servizio che accoglie, senza mai imporsi.
+              </p>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

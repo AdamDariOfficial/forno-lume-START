@@ -1,4 +1,6 @@
 import { Link } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
+
 import { site, mailLink, telLink } from "@/config/site";
 
 export function Footer() {
@@ -56,10 +58,17 @@ export function Footer() {
             © {new Date().getFullYear()} {site.legal.company}. Tutti i diritti
             riservati.
           </p>
-          <p className="opacity-70">
-            Progettato e sviluppato da{" "}
-            <a className="hover:text-terracotta" href="https://tretnix.com">
+          <p>
+            <span className="opacity-70">Progettato e sviluppato da</span>{" "}
+            <a
+              aria-label="Tretnix, si apre in una nuova scheda"
+              className="inline-flex items-center gap-1 rounded-sm underline decoration-terracotta/40 underline-offset-4 transition-colors hover:text-terracotta hover:decoration-terracotta focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              href="https://tretnix.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Tretnix
+              <ArrowUpRight aria-hidden="true" className="h-3 w-3 shrink-0" />
             </a>
           </p>
         </div>
