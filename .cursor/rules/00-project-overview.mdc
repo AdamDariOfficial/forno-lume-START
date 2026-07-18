@@ -1,18 +1,102 @@
 ---
-description: Forno Lume START project identity, controlled remediation and Tretnix workflow
+description: Forno Lume START project identity, frozen closure status and Tretnix workflow
 alwaysApply: true
 ---
 
 # Forno Lume START project overview
 
 - Read and follow the root `AGENTS.md`.
-- This repository is the Tretnix pilot and initial visual reference for Hospitality START.
-- The initial static audit and its quality-control pass are complete.
-- Implementation requires an approved, scoped task.
+- This repository is the Tretnix pilot and approved Hospitality START reference.
 - Preserve the warm, artisanal and premium client identity.
 - Do not reinterpret the site as generic SaaS.
-- Visual canonical status does not automatically imply technical canonical status.
-- Preserve mobile text-first editorial order, immediate route reset and viewport-triggered reveals.
+
+## Current verified state
+
+- The authoritative technical-closure source baseline is
+  `d15f639267dfdd57194536154abfa1d0ff3b4542` from 18 July 2026, merge pull
+  request #8 (`fix: complete START technical closure`).
+- Later documentation-only commits do not replace that source-code closure baseline.
+- The static read-only audit at historical baseline
+  `39d58126abb2fa9b63070e047db06c8027aaef6f` and its independent quality-control
+  pass remain part of the project record.
+- The approved audit, remediation and technical-closure cycle is complete.
+- Production browser verification was completed successfully by the project owner.
+
+## Completed packages
+
+- Tretnix compliance: approved footer attribution and mobile editorial order.
+- Accessibility hardening: hidden-navbar focus behavior, mobile drawer keyboard
+  handling and FAQ reduced motion.
+- Motion system: consistent below-the-fold reveals, editorial sequencing, restrained
+  stagger, static structural layouts and no single heavy reveal for large sections.
+- Final visual polish: complete Menu visual-card reveal, separately delayed About
+  informational items and an external Tretnix footer link.
+- Technical closure: immediate route reset, intentional smooth scrolling for same-page
+  anchors, production-based canonical and Open Graph URLs, removal of public Lovable
+  metadata and favicon, localized SSR error fallback, removal of the confirmed
+  TypeScript escape hatches and addition of the `typecheck` script.
+
+## Verification record
+
+Executed and passed during the closure cycle:
+
+- `bun run typecheck`;
+- `bun run build`, including the client production, SSR production and
+  Nitro/Cloudflare production build stages;
+- `git diff --check`;
+- ESLint with the Prettier rule disabled: zero errors, with the six pre-existing
+  warnings recorded below.
+
+Do not describe the complete repository lint command as passed:
+
+- complete lint currently fails because the Windows checkout uses CRLF while Prettier
+  expects LF;
+- six pre-existing `react-refresh/only-export-components` warnings remain in shadcn
+  scaffold files and were not introduced by the remediation.
+
+## Canonical role and limitations
+
+Forno Lume START is the approved baseline for:
+
+- the Tretnix Hospitality family visual identity;
+- the Tretnix Hospitality motion language;
+- a premium single-page Hospitality START product.
+
+It is not automatically canonical for:
+
+- multipage routing architecture;
+- gallery and lightbox architecture;
+- BUSINESS or BUSINESS PLUS functionality;
+- admin, authentication or backend architecture.
+
+Evaluate those patterns separately.
+
+## Frozen status
+
+- Forno Lume START is frozen after technical closure.
+- Further source changes require a confirmed bug, confirmed regression, security issue
+  or explicitly approved product requirement.
+- Any permitted change still requires an explicit, approved and scoped task.
+- Optional cleanup is not authorized by project status.
+
+## Remaining non-blocking backlog
+
+Record but do not implement without a separately approved task:
+
+- create an approved custom favicon;
+- create or select an optimized horizontal social-preview image;
+- perform a controlled SSR 500 fault test;
+- normalize repository line-ending policy;
+- review unused shadcn scaffold components;
+- review the unused React Query provider;
+- review technical warnings only when build tooling and regression checks are available.
+
+These items do not block progression to Forno Lume BUSINESS.
+
+## Workflow constraints
+
+- Preserve mobile text-first editorial order, immediate route reset, intentional
+  same-page smooth scrolling and viewport-triggered reveal behavior.
 - Only one writer may edit the working tree.
 - Do not write concurrently with Codex, Lovable, Cursor Agent or Claude Code.
 - Require a Git checkpoint before handoff.
