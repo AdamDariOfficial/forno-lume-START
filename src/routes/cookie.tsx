@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PolicyLayout } from "@/components/site/PolicyLayout";
+import { SITE_URL } from "@/config/site";
+
+const COOKIE_URL = new URL("/cookie", SITE_URL).href;
 
 export const Route = createFileRoute("/cookie")({
   head: () => ({
@@ -12,9 +15,9 @@ export const Route = createFileRoute("/cookie")({
       },
       { name: "robots", content: "noindex" },
       { property: "og:title", content: "Cookie policy | Forno Lume" },
-      { property: "og:url", content: "/cookie" },
+      { property: "og:url", content: COOKIE_URL },
     ],
-    links: [{ rel: "canonical", href: "/cookie" }],
+    links: [{ rel: "canonical", href: COOKIE_URL }],
   }),
   component: CookiePage,
 });

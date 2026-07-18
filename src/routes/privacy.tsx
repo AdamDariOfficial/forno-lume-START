@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PolicyLayout } from "@/components/site/PolicyLayout";
-import { site } from "@/config/site";
+import { SITE_URL, site } from "@/config/site";
+
+const PRIVACY_URL = new URL("/privacy", SITE_URL).href;
 
 export const Route = createFileRoute("/privacy")({
   head: () => ({
@@ -13,9 +15,9 @@ export const Route = createFileRoute("/privacy")({
       },
       { name: "robots", content: "noindex" },
       { property: "og:title", content: "Privacy policy | Forno Lume" },
-      { property: "og:url", content: "/privacy" },
+      { property: "og:url", content: PRIVACY_URL },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [{ rel: "canonical", href: PRIVACY_URL }],
   }),
   component: PrivacyPage,
 });
