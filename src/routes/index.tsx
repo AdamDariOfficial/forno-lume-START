@@ -226,22 +226,28 @@ function TrustStrip() {
 function ExperienceSection() {
   return (
     <section id="esperienza" className="container-page py-20 md:py-28">
-      <Reveal className="grid gap-10 md:grid-cols-12">
+      <div className="grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
-          <p className="eyebrow">L'esperienza</p>
-          <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
-            Poche cose,
-            <br />
-            <span className="italic text-terracotta">scelte bene.</span>
-          </h2>
+          <Reveal>
+            <p className="eyebrow">L'esperienza</p>
+            <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
+              Poche cose,
+              <br />
+              <span className="italic text-terracotta">scelte bene.</span>
+            </h2>
+          </Reveal>
         </div>
-        <p className="md:col-span-7 md:pt-4 text-base text-muted-foreground md:text-lg">
-          Forno Lume è pensato come un piccolo rifugio urbano. Un menu essenziale
-          che cambia con le stagioni, impasti curati, una carta dei vini
-          selezionata e un servizio che mette a proprio agio senza formalità
-          inutili.
-        </p>
-      </Reveal>
+        <div className="md:col-span-7 md:pt-4">
+          <Reveal delay={80}>
+            <p className="text-base text-muted-foreground md:text-lg">
+              Forno Lume è pensato come un piccolo rifugio urbano. Un menu
+              essenziale che cambia con le stagioni, impasti curati, una carta dei
+              vini selezionata e un servizio che mette a proprio agio senza
+              formalità inutili.
+            </p>
+          </Reveal>
+        </div>
+      </div>
     </section>
   );
 }
@@ -287,19 +293,25 @@ function MenuPreview() {
         className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-secondary/50 to-transparent"
       />
       <div className="container-page">
-        <Reveal className="flex flex-wrap items-end justify-between gap-6">
+        <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="eyebrow">Anteprima menu</p>
-            <h2 className="mt-4 text-4xl font-medium md:text-5xl">
-              Una piccola selezione
-            </h2>
+            <Reveal>
+              <p className="eyebrow">Anteprima menu</p>
+              <h2 className="mt-4 text-4xl font-medium md:text-5xl">
+                Una piccola selezione
+              </h2>
+            </Reveal>
           </div>
-          <p className="max-w-md text-sm text-muted-foreground md:text-[15px]">
-            Una selezione essenziale delle proposte più rappresentative di
-            Forno Lume: piatti semplici, lievitati curati e piccoli assaggi
-            pensati per accompagnare la serata.
-          </p>
-        </Reveal>
+          <div className="max-w-md">
+            <Reveal delay={80}>
+              <p className="text-sm text-muted-foreground md:text-[15px]">
+                Una selezione essenziale delle proposte più rappresentative di
+                Forno Lume: piatti semplici, lievitati curati e piccoli assaggi
+                pensati per accompagnare la serata.
+              </p>
+            </Reveal>
+          </div>
+        </div>
 
         <div className="mt-12 grid gap-10 md:grid-cols-12">
           <ul className="md:col-span-7 divide-y divide-border/70">
@@ -325,31 +337,35 @@ function MenuPreview() {
 
           <div className="md:col-span-5">
             <div className="sticky top-24">
-              <Reveal className="overflow-hidden rounded-3xl border border-border">
-                <img
-                  src={dishImg}
-                  alt="Burrata con pomodorini e basilico servita su ceramica rustica"
-                  loading="lazy"
-                  width={1408}
-                  height={1408}
-                  className="h-72 w-full object-cover md:h-[440px]"
-                />
+              <div className="overflow-hidden rounded-3xl border border-border">
+                <Reveal>
+                  <img
+                    src={dishImg}
+                    alt="Burrata con pomodorini e basilico servita su ceramica rustica"
+                    loading="lazy"
+                    width={1408}
+                    height={1408}
+                    className="h-72 w-full object-cover md:h-[440px]"
+                  />
+                </Reveal>
                 <div className="bg-card p-6">
-                  <p className="text-sm text-muted-foreground">
-                    Vuoi scoprire cosa c'è in carta questa sera? Scrivici per
-                    prenotare il tuo tavolo.
-                  </p>
-                  <a
-                    href={waLink(site.contact.whatsappReserveMessage)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 hover:-translate-y-0.5"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    Prenota un tavolo
-                  </a>
+                  <Reveal delay={80}>
+                    <p className="text-sm text-muted-foreground">
+                      Vuoi scoprire cosa c'è in carta questa sera? Scrivici per
+                      prenotare il tuo tavolo.
+                    </p>
+                    <a
+                      href={waLink(site.contact.whatsappReserveMessage)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 hover:-translate-y-0.5"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      Prenota un tavolo
+                    </a>
+                  </Reveal>
                 </div>
-              </Reveal>
+              </div>
             </div>
           </div>
         </div>
@@ -363,8 +379,8 @@ function AboutSection() {
   return (
     <section id="chi-siamo" className="container-page py-20 md:py-28">
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
-        <Reveal className="order-2 md:order-1 md:col-span-6">
-          <div className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
+        <div className="order-2 md:order-1 md:col-span-6">
+          <Reveal className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
             <img
               src={aboutImg}
               alt="Le mani di un fornaio lavorano l'impasto su un tagliere di legno infarinato"
@@ -373,36 +389,43 @@ function AboutSection() {
               height={1600}
               className="h-[420px] w-full object-cover md:h-[560px]"
             />
-          </div>
-        </Reveal>
-        <Reveal className="order-1 md:order-2 md:col-span-6 md:pt-6">
-          <p className="eyebrow">Chi siamo</p>
-          <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
-            Un locale piccolo,
-            <br />
-            <span className="italic text-terracotta">curato e sincero.</span>
-          </h2>
-          <p className="mt-6 text-base text-muted-foreground md:text-lg">
-            Forno Lume nasce dall'idea di un locale piccolo, curato e sincero:
-            pochi elementi, scelti bene. Ogni dettaglio — dall'impasto al
-            servizio, dalla luce dei tavoli alla selezione degli ingredienti — è
-            pensato per far sentire le persone accolte senza formalità inutili.
-          </p>
-          <div className="mt-8 grid grid-cols-2 gap-6 border-t border-border pt-6">
-            <div>
-              <p className="font-display text-3xl text-terracotta">01</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Un menu essenziale che cambia con le stagioni.
-              </p>
+          </Reveal>
+        </div>
+        <div className="order-1 md:order-2 md:col-span-6 md:pt-6">
+          <Reveal>
+            <p className="eyebrow">Chi siamo</p>
+            <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
+              Un locale piccolo,
+              <br />
+              <span className="italic text-terracotta">curato e sincero.</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={80} className="mt-6">
+            <p className="text-base text-muted-foreground md:text-lg">
+              Forno Lume nasce dall'idea di un locale piccolo, curato e sincero:
+              pochi elementi, scelti bene. Ogni dettaglio — dall'impasto al
+              servizio, dalla luce dei tavoli alla selezione degli ingredienti —
+              è pensato per far sentire le persone accolte senza formalità
+              inutili.
+            </p>
+          </Reveal>
+          <Reveal delay={160} className="mt-8">
+            <div className="grid grid-cols-2 gap-6 border-t border-border pt-6">
+              <div>
+                <p className="font-display text-3xl text-terracotta">01</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Un menu essenziale che cambia con le stagioni.
+                </p>
+              </div>
+              <div>
+                <p className="font-display text-3xl text-terracotta">02</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Un servizio che accoglie, senza mai imporsi.
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="font-display text-3xl text-terracotta">02</p>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Un servizio che accoglie, senza mai imporsi.
-              </p>
-            </div>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -451,34 +474,40 @@ function MethodSection() {
 function CTASection() {
   return (
     <section className="container-page py-20 md:py-28">
-      <Reveal>
+      <div
+        className="relative overflow-hidden rounded-[2rem] border border-border p-10 md:p-16"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(0.30 0.05 40) 0%, oklch(0.42 0.10 40) 55%, oklch(0.55 0.13 45) 100%)",
+        }}
+      >
         <div
-          className="relative overflow-hidden rounded-[2rem] border border-border p-10 md:p-16"
-          style={{
-            background:
-              "linear-gradient(135deg, oklch(0.30 0.05 40) 0%, oklch(0.42 0.10 40) 55%, oklch(0.55 0.13 45) 100%)",
-          }}
-        >
-          <div
-            aria-hidden
-            className="absolute right-0 top-0 h-48 w-48 rounded-full bg-accent/30 blur-3xl md:h-72 md:w-72"
-          />
-          <div className="relative max-w-2xl text-primary-foreground">
+          aria-hidden
+          className="absolute right-0 top-0 h-48 w-48 rounded-full bg-accent/30 blur-3xl md:h-72 md:w-72"
+        />
+        <div className="relative max-w-2xl text-primary-foreground">
+          <Reveal>
             <p className="eyebrow" style={{ color: "oklch(0.86 0.08 82)" }}>
               <span className="opacity-80">Prenota ora</span>
             </p>
-            <h2 className="mt-4 text-4xl font-medium leading-[1.05] md:text-5xl">
+          </Reveal>
+          <Reveal delay={70} className="mt-4">
+            <h2 className="text-4xl font-medium leading-[1.05] md:text-5xl">
               Vuoi riservare un tavolo
               <br />
               <span className="italic" style={{ color: "oklch(0.86 0.08 82)" }}>
                 per questa sera?
               </span>
             </h2>
-            <p className="mt-5 max-w-lg text-base opacity-85 md:text-lg">
+          </Reveal>
+          <Reveal delay={140} className="mt-5">
+            <p className="max-w-lg text-base opacity-85 md:text-lg">
               Scrivici in pochi secondi: ti confermeremo disponibilità, orari e
               dettagli.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+          </Reveal>
+          <Reveal delay={210} className="mt-8">
+            <div className="flex flex-wrap gap-3">
               <a
                 href={waLink(site.contact.whatsappReserveMessage)}
                 target="_blank"
@@ -496,9 +525,9 @@ function CTASection() {
                 Contattaci via email
               </a>
             </div>
-          </div>
+          </Reveal>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }
@@ -508,34 +537,43 @@ function PracticalInfo() {
   return (
     <section id="info" className="container-page pb-20 md:pb-28">
       <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-        <Reveal className="min-w-0 md:col-span-5">
-          <p className="eyebrow">Informazioni pratiche</p>
-          <h2 className="mt-4 text-4xl font-medium md:text-5xl">Dove siamo</h2>
-          <p className="mt-4 text-muted-foreground">
-            Un locale intimo nel centro di Padova. La prenotazione è consigliata,
-            soprattutto nei weekend.
-          </p>
+        <div className="min-w-0 md:col-span-5">
+          <Reveal>
+            <p className="eyebrow">Informazioni pratiche</p>
+            <h2 className="mt-4 text-4xl font-medium md:text-5xl">Dove siamo</h2>
+          </Reveal>
+          <Reveal delay={80} className="mt-4">
+            <p className="text-muted-foreground">
+              Un locale intimo nel centro di Padova. La prenotazione è
+              consigliata, soprattutto nei weekend.
+            </p>
+          </Reveal>
 
-          <dl className="mt-8 space-y-5">
-            <InfoRow icon={MapPin} label="Indirizzo" value={site.contact.address} />
-            <InfoRow icon={Clock} label="Orari" value={site.contact.hours} />
-            <InfoRow
-              icon={Phone}
-              label="Telefono"
-              value={site.contact.phone}
-              href={telLink()}
-            />
-            <InfoRow
-              icon={Mail}
-              label="Email"
-              value={site.contact.email}
-              href={mailLink()}
-            />
-          </dl>
-        </Reveal>
+          <Reveal delay={160} className="mt-8">
+            <dl className="space-y-5">
+              <InfoRow icon={MapPin} label="Indirizzo" value={site.contact.address} />
+              <InfoRow icon={Clock} label="Orari" value={site.contact.hours} />
+              <InfoRow
+                icon={Phone}
+                label="Telefono"
+                value={site.contact.phone}
+                href={telLink()}
+              />
+              <InfoRow
+                icon={Mail}
+                label="Email"
+                value={site.contact.email}
+                href={mailLink()}
+              />
+            </dl>
+          </Reveal>
+        </div>
 
-        <Reveal className="min-w-0 md:col-span-7">
-          <div className="max-w-full overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
+        <div className="min-w-0 md:col-span-7">
+          <Reveal
+            delay={80}
+            className="max-w-full overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]"
+          >
             <div className="relative min-w-0 max-w-full overflow-hidden">
               <div className="relative min-h-[280px] min-w-0 max-w-full overflow-hidden sm:aspect-[16/10] md:aspect-[5/4] md:min-h-0">
                 <iframe
@@ -588,8 +626,8 @@ function PracticalInfo() {
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </span>
             </a>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
@@ -635,19 +673,23 @@ function FAQSection() {
     <section id="faq" className="border-t border-border bg-secondary/30">
       <div className="container-page py-20 md:py-28">
         <div className="grid gap-12 md:grid-cols-12">
-          <Reveal className="md:col-span-4">
-            <p className="eyebrow">Domande frequenti</p>
-            <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
-              Le risposte più comuni.
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Non trovi quello che cerchi? Scrivici su WhatsApp, rispondiamo in
-              breve tempo.
-            </p>
-          </Reveal>
-          <Reveal className="md:col-span-8">
+          <div className="md:col-span-4">
+            <Reveal>
+              <p className="eyebrow">Domande frequenti</p>
+              <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
+                Le risposte più comuni.
+              </h2>
+            </Reveal>
+            <Reveal delay={80} className="mt-4">
+              <p className="text-muted-foreground">
+                Non trovi quello che cerchi? Scrivici su WhatsApp, rispondiamo in
+                breve tempo.
+              </p>
+            </Reveal>
+          </div>
+          <div className="md:col-span-8">
             <FAQList items={site.faq} />
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>
@@ -663,7 +705,7 @@ function FAQList({ items }: { items: readonly { q: string; a: string }[] }) {
         const panelId = `faq-panel-${i}`;
         const btnId = `faq-btn-${i}`;
         return (
-          <li key={f.q}>
+          <Reveal key={f.q} as="li" delay={i * 70}>
             <button
               id={btnId}
               type="button"
@@ -695,7 +737,7 @@ function FAQList({ items }: { items: readonly { q: string; a: string }[] }) {
                 </p>
               </div>
             </div>
-          </li>
+          </Reveal>
         );
       })}
     </ul>
