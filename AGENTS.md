@@ -17,8 +17,10 @@ These instructions apply to Codex, Cursor Agent, Lovable, Claude Code and any ot
 
 Forno Lume START is:
 
-- a completed and deployed Hospitality START website;
-- the initial canonical visual reference for the Tretnix Hospitality family;
+- a completed, remediated, verified and deployed Hospitality START website;
+- the approved visual baseline for the Tretnix Hospitality family;
+- the approved motion-language baseline for the Tretnix Hospitality family;
+- the approved reference for a premium single-page Hospitality START product;
 - the source project from which Forno Lume BUSINESS evolved;
 - the pilot repository for the Tretnix controlled development workflow.
 
@@ -36,15 +38,77 @@ https://forno-lume.tretnix.com
 
 ## Verified project state
 
-Confirmed as of 17 July 2026:
+Confirmed as of 18 July 2026 against the authoritative technical-closure source
+baseline `d15f639267dfdd57194536154abfa1d0ff3b4542` (merge pull request #8,
+`fix: complete START technical closure`).
+
+Later documentation-only commits may advance `main` without replacing this
+source-code closure baseline.
 
 - the agent foundation is merged into `main`;
-- a static read-only audit was completed at commit `39d58126abb2fa9b63070e047db06c8027aaef6f`;
+- the static read-only audit was completed at the historical baseline
+  `39d58126abb2fa9b63070e047db06c8027aaef6f`;
 - the audit received an independent quality-control pass;
-- no remediation has yet been approved or implemented;
-- build, lint, typecheck and interactive browser verification are still required.
+- the approved remediation packages and technical closure are complete and merged into `main`;
+- production browser verification was completed successfully by the project owner;
+- the project is frozen after technical closure under the rules below.
 
-Implementation requires an explicit approved task.
+## Completed remediation and closure packages
+
+### Tretnix compliance
+
+- The approved footer attribution is implemented.
+- The approved mobile editorial order is implemented.
+
+### Accessibility hardening
+
+- Hidden-navbar focus behavior is hardened.
+- Mobile drawer keyboard handling is complete.
+- FAQ motion respects `prefers-reduced-motion`.
+
+### Motion system
+
+- Below-the-fold reveals are consistent.
+- Reveal timing follows editorial sequencing with restrained stagger.
+- Structural layouts remain static.
+- Large sections are not animated as single heavy blocks.
+
+### Final visual polish
+
+- The Menu visual card has one complete reveal.
+- The About informational items use separate delays.
+- The Tretnix footer attribution uses an external link.
+
+### Technical closure
+
+- Route reset is immediate.
+- Same-page anchors retain intentional smooth scrolling.
+- Canonical and Open Graph URLs use the production origin.
+- Public Lovable metadata and the Lovable favicon were removed.
+- The SSR error fallback is localized in Italian.
+- The confirmed TypeScript escape hatches identified during remediation were removed.
+- The repository defines a `typecheck` script.
+
+## Verification record
+
+### Executed and passed during the closure cycle
+
+- `bun run typecheck`;
+- `bun run build`, including the client production, SSR production and
+  Nitro/Cloudflare production build stages;
+- `git diff --check`;
+- ESLint with the Prettier rule disabled: zero errors, with the six pre-existing
+  warnings recorded below.
+
+Production browser verification was completed successfully by the project owner.
+
+### Executed and not passed or still limited
+
+- The complete repository lint command must not be described as passed.
+- Complete lint currently fails because the Windows checkout uses CRLF while Prettier
+  expects LF.
+- Six pre-existing `react-refresh/only-export-components` warnings remain in shadcn
+  scaffold files. They were not introduced by the remediation.
 
 ## Source precedence
 
@@ -90,17 +154,23 @@ Do not:
 
 ## Canonical role and limitations
 
-Forno Lume START is the declared visual reference for:
+Forno Lume START is the approved reference for:
 
-- Hospitality START identity;
-- typography;
-- palette;
-- navbar perceived behavior;
-- reveal language;
-- interactions;
-- responsive quality.
+- the visual baseline of the Tretnix Hospitality family;
+- the motion-language baseline of the Tretnix Hospitality family;
+- a premium single-page Hospitality START product.
 
-It is not automatically the technical canonical source for every implementation.
+The approved visual and motion baseline includes typography, palette, perceived navbar
+behavior, reveal language, interactions and responsive quality.
+
+It is not automatically the canonical source for:
+
+- multipage routing architecture;
+- gallery and lightbox architecture;
+- BUSINESS or BUSINESS PLUS functionality;
+- admin, authentication or backend architecture.
+
+Those patterns must be evaluated separately.
 
 Before copying a pattern:
 
@@ -110,6 +180,21 @@ Before copying a pattern:
 4. identify technical defects;
 5. preserve the approved perceived behavior;
 6. improve implementation only through an approved task.
+
+## Frozen status
+
+Forno Lume START is frozen after technical closure.
+
+Further source changes require at least one of:
+
+- a confirmed bug;
+- a confirmed regression;
+- a security issue;
+- an explicitly approved product requirement.
+
+Any permitted change still requires an explicit, approved and scoped task.
+
+Optional cleanup is not authorized by the current project status.
 
 ## Approved Tretnix decisions
 
@@ -134,6 +219,7 @@ Do not duplicate markup only to change order.
 
 - New routes open at the top.
 - Route reset is immediate, not smooth.
+- Same-page anchors retain intentional smooth scrolling.
 - Preserve direct URL, refresh, browser back and forward.
 - Cross-route section links navigate before scrolling.
 
@@ -143,10 +229,12 @@ Do not duplicate markup only to change order.
 - Avoid flashes and already-completed reveals.
 - Respect `prefers-reduced-motion`.
 - Content remains visible without animation.
+- Preserve editorial sequencing and restrained stagger.
+- Keep structural layouts static and do not animate large sections as single heavy blocks.
 
 ### Footer attribution
 
-Include a discreet link:
+Preserve the implemented discreet external link:
 
 “Progettato e sviluppato da Tretnix”
 
@@ -160,19 +248,19 @@ https://tretnix.com
 
 Forno Lume BUSINESS preserves the approved START identity and motion language while expanding routes, content, navigation and functionality.
 
-## Current approved backlog source
+## Remaining non-blocking backlog
 
-The authoritative remediation scope must come from an approved task based on the quality-controlled audit.
+The following items are recorded but are not approved for implementation by project status:
 
-Known priority candidates are:
+- create an approved custom favicon;
+- create or select an optimized horizontal social-preview image;
+- perform a controlled SSR 500 fault test;
+- normalize repository line-ending policy;
+- review unused shadcn scaffold components;
+- review the unused React Query provider;
+- review technical warnings only when build tooling and regression checks are available.
 
-- footer attribution;
-- mobile order in `AboutSection`;
-- hidden navbar semantics and focus;
-- mobile drawer keyboard behavior;
-- FAQ reduced motion.
-
-This list is context, not permission to modify all items together.
+These items do not block progression to Forno Lume BUSINESS.
 
 ## Working method
 
