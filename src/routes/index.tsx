@@ -226,7 +226,7 @@ function TrustStrip() {
 function ExperienceSection() {
   return (
     <section id="esperienza" className="container-page py-20 md:py-28">
-      <div className="grid gap-10 md:grid-cols-12">
+      <Reveal className="grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
           <p className="eyebrow">L'esperienza</p>
           <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
@@ -241,7 +241,7 @@ function ExperienceSection() {
           selezionata e un servizio che mette a proprio agio senza formalità
           inutili.
         </p>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -287,7 +287,7 @@ function MenuPreview() {
         className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-secondary/50 to-transparent"
       />
       <div className="container-page">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <Reveal className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <p className="eyebrow">Anteprima menu</p>
             <h2 className="mt-4 text-4xl font-medium md:text-5xl">
@@ -299,7 +299,7 @@ function MenuPreview() {
             Forno Lume: piatti semplici, lievitati curati e piccoli assaggi
             pensati per accompagnare la serata.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-12 grid gap-10 md:grid-cols-12">
           <ul className="md:col-span-7 divide-y divide-border/70">
@@ -324,30 +324,32 @@ function MenuPreview() {
           </ul>
 
           <div className="md:col-span-5">
-            <div className="sticky top-24 overflow-hidden rounded-3xl border border-border">
-              <img
-                src={dishImg}
-                alt="Burrata con pomodorini e basilico servita su ceramica rustica"
-                loading="lazy"
-                width={1408}
-                height={1408}
-                className="h-72 w-full object-cover md:h-[440px]"
-              />
-              <div className="bg-card p-6">
-                <p className="text-sm text-muted-foreground">
-                  Vuoi scoprire cosa c'è in carta questa sera? Scrivici per
-                  prenotare il tuo tavolo.
-                </p>
-                <a
-                  href={waLink(site.contact.whatsappReserveMessage)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 hover:-translate-y-0.5"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  Prenota un tavolo
-                </a>
-              </div>
+            <div className="sticky top-24">
+              <Reveal className="overflow-hidden rounded-3xl border border-border">
+                <img
+                  src={dishImg}
+                  alt="Burrata con pomodorini e basilico servita su ceramica rustica"
+                  loading="lazy"
+                  width={1408}
+                  height={1408}
+                  className="h-72 w-full object-cover md:h-[440px]"
+                />
+                <div className="bg-card p-6">
+                  <p className="text-sm text-muted-foreground">
+                    Vuoi scoprire cosa c'è in carta questa sera? Scrivici per
+                    prenotare il tuo tavolo.
+                  </p>
+                  <a
+                    href={waLink(site.contact.whatsappReserveMessage)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 hover:-translate-y-0.5"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Prenota un tavolo
+                  </a>
+                </div>
+              </Reveal>
             </div>
           </div>
         </div>
@@ -361,7 +363,7 @@ function AboutSection() {
   return (
     <section id="chi-siamo" className="container-page py-20 md:py-28">
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
-        <div className="order-2 md:order-1 md:col-span-6">
+        <Reveal className="order-2 md:order-1 md:col-span-6">
           <div className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
             <img
               src={aboutImg}
@@ -372,8 +374,8 @@ function AboutSection() {
               className="h-[420px] w-full object-cover md:h-[560px]"
             />
           </div>
-        </div>
-        <div className="order-1 md:order-2 md:col-span-6 md:pt-6">
+        </Reveal>
+        <Reveal className="order-1 md:order-2 md:col-span-6 md:pt-6">
           <p className="eyebrow">Chi siamo</p>
           <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
             Un locale piccolo,
@@ -400,7 +402,7 @@ function AboutSection() {
               </p>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -411,12 +413,12 @@ function MethodSection() {
   return (
     <section className="border-y border-border bg-secondary/30">
       <div className="container-page py-20 md:py-24">
-        <div className="max-w-2xl">
+        <Reveal className="max-w-2xl">
           <p className="eyebrow">Come funziona</p>
           <h2 className="mt-4 text-3xl font-medium md:text-4xl">
             Da un messaggio al tavolo, in pochi minuti.
           </h2>
-        </div>
+        </Reveal>
         <div className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
           {site.experience.map((s, i) => (
             <Reveal key={s.step} delay={i * 140} className="relative">
@@ -449,52 +451,54 @@ function MethodSection() {
 function CTASection() {
   return (
     <section className="container-page py-20 md:py-28">
-      <div
-        className="relative overflow-hidden rounded-[2rem] border border-border p-10 md:p-16"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(0.30 0.05 40) 0%, oklch(0.42 0.10 40) 55%, oklch(0.55 0.13 45) 100%)",
-        }}
-      >
+      <Reveal>
         <div
-          aria-hidden
-          className="absolute right-0 top-0 h-48 w-48 rounded-full bg-accent/30 blur-3xl md:h-72 md:w-72"
-        />
-        <div className="relative max-w-2xl text-primary-foreground">
-          <p className="eyebrow" style={{ color: "oklch(0.86 0.08 82)" }}>
-            <span className="opacity-80">Prenota ora</span>
-          </p>
-          <h2 className="mt-4 text-4xl font-medium leading-[1.05] md:text-5xl">
-            Vuoi riservare un tavolo
-            <br />
-            <span className="italic" style={{ color: "oklch(0.86 0.08 82)" }}>
-              per questa sera?
-            </span>
-          </h2>
-          <p className="mt-5 max-w-lg text-base opacity-85 md:text-lg">
-            Scrivici in pochi secondi: ti confermeremo disponibilità, orari e
-            dettagli.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={waLink(site.contact.whatsappReserveMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 text-sm font-medium text-foreground transition hover:opacity-90"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Scrivici su WhatsApp
-            </a>
-            <a
-              href={mailLink("Prenotazione Forno Lume")}
-              className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3.5 text-sm font-medium text-primary-foreground transition hover:bg-white/10"
-            >
-              <Mail className="h-4 w-4" />
-              Contattaci via email
-            </a>
+          className="relative overflow-hidden rounded-[2rem] border border-border p-10 md:p-16"
+          style={{
+            background:
+              "linear-gradient(135deg, oklch(0.30 0.05 40) 0%, oklch(0.42 0.10 40) 55%, oklch(0.55 0.13 45) 100%)",
+          }}
+        >
+          <div
+            aria-hidden
+            className="absolute right-0 top-0 h-48 w-48 rounded-full bg-accent/30 blur-3xl md:h-72 md:w-72"
+          />
+          <div className="relative max-w-2xl text-primary-foreground">
+            <p className="eyebrow" style={{ color: "oklch(0.86 0.08 82)" }}>
+              <span className="opacity-80">Prenota ora</span>
+            </p>
+            <h2 className="mt-4 text-4xl font-medium leading-[1.05] md:text-5xl">
+              Vuoi riservare un tavolo
+              <br />
+              <span className="italic" style={{ color: "oklch(0.86 0.08 82)" }}>
+                per questa sera?
+              </span>
+            </h2>
+            <p className="mt-5 max-w-lg text-base opacity-85 md:text-lg">
+              Scrivici in pochi secondi: ti confermeremo disponibilità, orari e
+              dettagli.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href={waLink(site.contact.whatsappReserveMessage)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 text-sm font-medium text-foreground transition hover:opacity-90"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Scrivici su WhatsApp
+              </a>
+              <a
+                href={mailLink("Prenotazione Forno Lume")}
+                className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3.5 text-sm font-medium text-primary-foreground transition hover:bg-white/10"
+              >
+                <Mail className="h-4 w-4" />
+                Contattaci via email
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
@@ -504,7 +508,7 @@ function PracticalInfo() {
   return (
     <section id="info" className="container-page pb-20 md:pb-28">
       <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-        <div className="min-w-0 md:col-span-5">
+        <Reveal className="min-w-0 md:col-span-5">
           <p className="eyebrow">Informazioni pratiche</p>
           <h2 className="mt-4 text-4xl font-medium md:text-5xl">Dove siamo</h2>
           <p className="mt-4 text-muted-foreground">
@@ -528,9 +532,9 @@ function PracticalInfo() {
               href={mailLink()}
             />
           </dl>
-        </div>
+        </Reveal>
 
-        <div className="min-w-0 md:col-span-7">
+        <Reveal className="min-w-0 md:col-span-7">
           <div className="max-w-full overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
             <div className="relative min-w-0 max-w-full overflow-hidden">
               <div className="relative min-h-[280px] min-w-0 max-w-full overflow-hidden sm:aspect-[16/10] md:aspect-[5/4] md:min-h-0">
@@ -585,7 +589,7 @@ function PracticalInfo() {
               </span>
             </a>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -631,7 +635,7 @@ function FAQSection() {
     <section id="faq" className="border-t border-border bg-secondary/30">
       <div className="container-page py-20 md:py-28">
         <div className="grid gap-12 md:grid-cols-12">
-          <div className="md:col-span-4">
+          <Reveal className="md:col-span-4">
             <p className="eyebrow">Domande frequenti</p>
             <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
               Le risposte più comuni.
@@ -640,10 +644,10 @@ function FAQSection() {
               Non trovi quello che cerchi? Scrivici su WhatsApp, rispondiamo in
               breve tempo.
             </p>
-          </div>
-          <div className="md:col-span-8">
+          </Reveal>
+          <Reveal className="md:col-span-8">
             <FAQList items={site.faq} />
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
