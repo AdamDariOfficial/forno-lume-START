@@ -13,7 +13,7 @@ export const Route = createFileRoute("/cookie")({
         content:
           "Informativa cookie del sito demo Forno Lume. Nessun cookie di profilazione o tracciamento avanzato.",
       },
-      { name: "robots", content: "noindex" },
+      { name: "robots", content: "noindex, follow" },
       { property: "og:title", content: "Cookie policy | Forno Lume" },
       { property: "og:url", content: COOKIE_URL },
     ],

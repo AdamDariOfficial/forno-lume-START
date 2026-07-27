@@ -13,7 +13,7 @@ export const Route = createFileRoute("/privacy")({
         content:
           "Informativa privacy del sito demo Forno Lume. Nessun database, nessun login, nessun pagamento online.",
       },
-      { name: "robots", content: "noindex" },
+      { name: "robots", content: "noindex, follow" },
       { property: "og:title", content: "Privacy policy | Forno Lume" },
       { property: "og:url", content: PRIVACY_URL },
     ],
