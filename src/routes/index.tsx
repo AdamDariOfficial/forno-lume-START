@@ -50,20 +50,27 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "Restaurant",
-          name: "Forno Lume",
-          description:
-            "Bistrot e pizzeria contemporanea con cucina semplice e atmosfera calda.",
-          servesCuisine: ["Italian", "Pizza"],
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "Via Roma 24",
-            addressLocality: "Padova",
-            addressCountry: "IT",
-          },
-          telephone: "+39 000 000 0000",
-          openingHours: "Tu-Su 18:30-23:00",
-        }),
+          "@graph": [
+            {
+              "@type": "WebSite",
+              "@id": `${SITE_URL}#website`,
+              url: SITE_URL,
+              name: site.brand.name,
+              description: site.brand.description,
+              inLanguage: "it-IT",
+            },
+            {
+              "@type": "WebPage",
+              "@id": `${SITE_URL}#webpage`,
+              url: SITE_URL,
+              name: "Forno Lume — Demo Hospitality START",
+              description:
+                "Concept dimostrativo Tretnix per un sito Hospitality START.",
+              inLanguage: "it-IT",
+              isPartOf: { "@id": `${SITE_URL}#website` },
+            },
+          ],
+        }).replace(/</g, "\\u003c"),
       },
     ],
   }),

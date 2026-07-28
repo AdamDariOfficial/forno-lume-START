@@ -220,6 +220,23 @@ export function Navbar() {
     }
   }, [open]);
 
+  // Close reliably when the user clicks outside the trigger or floating panel.
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (drawerRef.current?.contains(target)) return;
+      if (menuTriggerRef.current?.contains(target)) return;
+      restoreFocusRef.current = true;
+      setOpen(false);
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [open]);
+
   const close = (shouldRestoreFocus = true) => {
     if (!open) return;
     restoreFocusRef.current = shouldRestoreFocus;
@@ -317,6 +334,7 @@ export function Navbar() {
           type="button"
           aria-label={open ? "Chiudi menu" : "Apri menu"}
           aria-expanded={open}
+          aria-haspopup="dialog"
           aria-controls="mobile-nav"
           onClick={() => {
             if (open) {
@@ -341,14 +359,6 @@ export function Navbar() {
         </button>
       </div>
 
-      {/* Overlay */}
-      <div
-        aria-hidden
-        onClick={() => close()}
-        className={`fixed inset-0 top-16 z-40 bg-ink/30 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-      />
 
       {/* Drawer */}
       <div
@@ -364,7 +374,7 @@ export function Navbar() {
         }`}
       >
         <div className="container-page pb-6 pt-2">
-          <div className="rounded-2xl border border-border bg-card p-4 shadow-[var(--shadow-warm)]">
+          <div className="rounded-2xl border border-border bg-card/95 p-4 shadow-[var(--shadow-soft)] backdrop-blur">
             <nav className="flex flex-col" aria-label="Sezioni mobile">
               {site.nav.map((n, i) => {
                 const id = idFromHref(n.href);
