@@ -15,6 +15,7 @@ import { SITE_URL } from "../config/site";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 import { Navbar } from "../components/site/Navbar";
+import { RouteFocus } from "../components/site/RouteFocus";
 
 const SOCIAL_IMAGE_URL = new URL(heroImg, SITE_URL).href;
 
@@ -25,12 +26,8 @@ function NotFoundComponent() {
       <div className="flex min-h-screen items-center justify-center px-6">
         <div className="max-w-lg text-center">
           <p className="eyebrow justify-center">Errore 404</p>
-          <h1 className="mt-5 text-4xl font-medium sm:text-5xl">
-            Questa pagina non è nel menu.
-          </h1>
-          <p className="mt-4 text-base text-muted-foreground">
-            Torniamo alla sala principale.
-          </p>
+          <h1 className="mt-5 text-4xl font-medium sm:text-5xl">Questa pagina non è nel menu.</h1>
+          <p className="mt-4 text-base text-muted-foreground">Torniamo alla sala principale.</p>
           <div className="mt-8">
             <Link
               to="/"
@@ -56,9 +53,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="max-w-md text-center">
         <h1 className="text-2xl font-medium">Qualcosa non ha caricato</h1>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Puoi riprovare o tornare alla home.
-        </p>
+        <p className="mt-3 text-sm text-muted-foreground">Puoi riprovare o tornare alla home.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <button
             onClick={() => {
@@ -107,7 +102,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Forno Lume" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Forno Lume | Bistrot e pizzeria contemporanea a Padova" },
-      { name: "twitter:description", content: "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp." },
+      {
+        name: "twitter:description",
+        content:
+          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
+      },
       { property: "og:image", content: SOCIAL_IMAGE_URL },
       { name: "twitter:image", content: SOCIAL_IMAGE_URL },
     ],
@@ -151,6 +150,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
+      <RouteFocus />
       <Outlet />
     </QueryClientProvider>
   );

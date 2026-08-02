@@ -64,8 +64,7 @@ export const Route = createFileRoute("/")({
               "@id": `${SITE_URL}#webpage`,
               url: SITE_URL,
               name: "Forno Lume — Demo Hospitality START",
-              description:
-                "Concept dimostrativo Tretnix per un sito Hospitality START.",
+              description: "Concept dimostrativo Tretnix per un sito Hospitality START.",
               inLanguage: "it-IT",
               isPartOf: { "@id": `${SITE_URL}#website` },
             },
@@ -129,13 +128,7 @@ function Hero() {
   const navigate = useNavigate();
 
   const handleMenuClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (
-      event.button !== 0 ||
-      event.metaKey ||
-      event.ctrlKey ||
-      event.shiftKey ||
-      event.altKey
-    ) {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
       return;
     }
 
@@ -196,11 +189,19 @@ function Hero() {
           <div className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-border pt-6 text-xs text-muted-foreground">
             <div className="flex flex-col gap-1">
               <Clock className="h-4 w-4 text-terracotta" />
-              <span>Mar–Dom<br />18:30–23:00</span>
+              <span>
+                Mar–Dom
+                <br />
+                18:30–23:00
+              </span>
             </div>
             <div className="flex flex-col gap-1">
               <MapPin className="h-4 w-4 text-terracotta" />
-              <span>Via Roma 24<br />Padova</span>
+              <span>
+                Via Roma 24
+                <br />
+                Padova
+              </span>
             </div>
             <div className="flex flex-col gap-1">
               <Leaf className="h-4 w-4 text-terracotta" />
@@ -223,9 +224,7 @@ function Hero() {
             </div>
             <div className="absolute -bottom-4 left-4 hidden rounded-2xl border border-border bg-card/95 px-5 py-4 shadow-[var(--shadow-soft)] backdrop-blur sm:block md:-left-6">
               <p className="eyebrow">Stasera</p>
-              <p className="mt-1 font-display text-lg leading-tight">
-                Forno acceso alle 18:30
-              </p>
+              <p className="mt-1 font-display text-lg leading-tight">Forno acceso alle 18:30</p>
             </div>
           </div>
         </div>
@@ -240,10 +239,7 @@ function TrustStrip() {
     <section className="border-y border-border bg-secondary/40">
       <div className="container-page grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:gap-4 md:py-10">
         {site.trust.map((t) => (
-          <div
-            key={t.label}
-            className="flex items-center gap-3 text-sm md:justify-center"
-          >
+          <div key={t.label} className="flex items-center gap-3 text-sm md:justify-center">
             <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-terracotta" />
             <span className="text-foreground/80">{t.label}</span>
           </div>
@@ -271,10 +267,9 @@ function ExperienceSection() {
         <div className="md:col-span-7 md:pt-4">
           <Reveal delay={80}>
             <p className="text-base text-muted-foreground md:text-lg">
-              Forno Lume è pensato come un piccolo rifugio urbano. Un menu
-              essenziale che cambia con le stagioni, impasti curati, una carta dei
-              vini selezionata e un servizio che mette a proprio agio senza
-              formalità inutili.
+              Forno Lume è pensato come un piccolo rifugio urbano. Un menu essenziale che cambia con
+              le stagioni, impasti curati, una carta dei vini selezionata e un servizio che mette a
+              proprio agio senza formalità inutili.
             </p>
           </Reveal>
         </div>
@@ -299,9 +294,7 @@ function OfferSection() {
                 <h3 className="experience-card-title mt-6 font-display text-2xl leading-tight">
                   {o.title}
                 </h3>
-                <p className="mt-3 text-sm text-muted-foreground md:text-[15px]">
-                  {o.body}
-                </p>
+                <p className="mt-3 text-sm text-muted-foreground md:text-[15px]">{o.body}</p>
                 <div className="mt-8 flex items-center gap-2 border-t border-border pt-4 text-xs uppercase tracking-widest text-muted-foreground">
                   <span className="h-px w-6 bg-terracotta" />
                   {o.detail}
@@ -328,17 +321,14 @@ function MenuPreview() {
           <div>
             <Reveal>
               <p className="eyebrow">Anteprima menu</p>
-              <h2 className="mt-4 text-4xl font-medium md:text-5xl">
-                Una piccola selezione
-              </h2>
+              <h2 className="mt-4 text-4xl font-medium md:text-5xl">Una piccola selezione</h2>
             </Reveal>
           </div>
           <div className="max-w-md">
             <Reveal delay={80}>
               <p className="text-sm text-muted-foreground md:text-[15px]">
-                Una selezione essenziale delle proposte più rappresentative di
-                Forno Lume: piatti semplici, lievitati curati e piccoli assaggi
-                pensati per accompagnare la serata.
+                Una selezione essenziale delle proposte più rappresentative di Forno Lume: piatti
+                semplici, lievitati curati e piccoli assaggi pensati per accompagnare la serata.
               </p>
             </Reveal>
           </div>
@@ -354,14 +344,10 @@ function MenuPreview() {
                 className="grid grid-cols-[1fr_auto] items-baseline gap-4 py-5"
               >
                 <div className="min-w-0">
-                  <p className="font-display text-xl leading-tight">
-                    {m.name}
-                  </p>
+                  <p className="font-display text-xl leading-tight">{m.name}</p>
                   <p className="mt-1 text-sm text-muted-foreground">{m.desc}</p>
                 </div>
-                <span className="shrink-0 font-display text-lg text-terracotta">
-                  €{m.price}
-                </span>
+                <span className="shrink-0 font-display text-lg text-terracotta">€{m.price}</span>
               </Reveal>
             ))}
           </ul>
@@ -379,8 +365,8 @@ function MenuPreview() {
                 />
                 <div className="bg-card p-6">
                   <p className="text-sm text-muted-foreground">
-                    Vuoi scoprire cosa c'è in carta questa sera? Scrivici per
-                    prenotare il tuo tavolo.
+                    Vuoi scoprire cosa c'è in carta questa sera? Scrivici per prenotare il tuo
+                    tavolo.
                   </p>
                   <a
                     href={waLink(site.contact.whatsappReserveMessage)}
@@ -429,11 +415,10 @@ function AboutSection() {
           </Reveal>
           <Reveal delay={80} className="mt-6">
             <p className="text-base text-muted-foreground md:text-lg">
-              Forno Lume nasce dall'idea di un locale piccolo, curato e sincero:
-              pochi elementi, scelti bene. Ogni dettaglio — dall'impasto al
-              servizio, dalla luce dei tavoli alla selezione degli ingredienti —
-              è pensato per far sentire le persone accolte senza formalità
-              inutili.
+              Forno Lume nasce dall'idea di un locale piccolo, curato e sincero: pochi elementi,
+              scelti bene. Ogni dettaglio — dall'impasto al servizio, dalla luce dei tavoli alla
+              selezione degli ingredienti — è pensato per far sentire le persone accolte senza
+              formalità inutili.
             </p>
           </Reveal>
           <div className="mt-8 grid grid-cols-2 gap-6 border-t border-border pt-6">
@@ -471,22 +456,13 @@ function MethodSection() {
           {site.experience.map((s, i) => (
             <Reveal key={s.step} delay={i * 140} className="relative">
               <div className="flex items-center gap-4">
-                <span className="font-display text-4xl text-terracotta">
-                  {s.step}
-                </span>
+                <span className="font-display text-4xl text-terracotta">{s.step}</span>
                 {i < site.experience.length - 1 && (
-                  <span
-                    aria-hidden
-                    className="hidden h-px flex-1 bg-border md:block"
-                  />
+                  <span aria-hidden className="hidden h-px flex-1 bg-border md:block" />
                 )}
               </div>
-              <h3 className="mt-5 font-display text-2xl leading-tight">
-                {s.title}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground md:text-[15px]">
-                {s.body}
-              </p>
+              <h3 className="mt-5 font-display text-2xl leading-tight">{s.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground md:text-[15px]">{s.body}</p>
             </Reveal>
           ))}
         </div>
@@ -527,8 +503,7 @@ function CTASection() {
           </Reveal>
           <Reveal delay={140} className="mt-5">
             <p className="max-w-lg text-base opacity-85 md:text-lg">
-              Scrivici in pochi secondi: ti confermeremo disponibilità, orari e
-              dettagli.
+              Scrivici in pochi secondi: ti confermeremo disponibilità, orari e dettagli.
             </p>
           </Reveal>
           <Reveal delay={210} className="mt-8">
@@ -569,8 +544,8 @@ function PracticalInfo() {
           </Reveal>
           <Reveal delay={80} className="mt-4">
             <p className="text-muted-foreground">
-              Un locale intimo nel centro di Padova. La prenotazione è
-              consigliata, soprattutto nei weekend.
+              Un locale intimo nel centro di Padova. La prenotazione è consigliata, soprattutto nei
+              weekend.
             </p>
           </Reveal>
 
@@ -578,18 +553,8 @@ function PracticalInfo() {
             <dl className="space-y-5">
               <InfoRow icon={MapPin} label="Indirizzo" value={site.contact.address} />
               <InfoRow icon={Clock} label="Orari" value={site.contact.hours} />
-              <InfoRow
-                icon={Phone}
-                label="Telefono"
-                value={site.contact.phone}
-                href={telLink()}
-              />
-              <InfoRow
-                icon={Mail}
-                label="Email"
-                value={site.contact.email}
-                href={mailLink()}
-              />
+              <InfoRow icon={Phone} label="Telefono" value={site.contact.phone} href={telLink()} />
+              <InfoRow icon={Mail} label="Email" value={site.contact.email} href={mailLink()} />
             </dl>
           </Reveal>
         </div>
@@ -621,9 +586,7 @@ function PracticalInfo() {
                   <span className="block text-xs uppercase tracking-widest text-muted-foreground">
                     Come raggiungerci
                   </span>
-                  <span className="mt-1 block text-sm">
-                    {site.contact.address}
-                  </span>
+                  <span className="mt-1 block text-sm">{site.contact.address}</span>
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
                   Apri su Google Maps
@@ -642,9 +605,7 @@ function PracticalInfo() {
                 <span className="block text-xs uppercase tracking-widest text-muted-foreground">
                   Come raggiungerci
                 </span>
-                <span className="mt-1 block truncate text-sm">
-                  {site.contact.address}
-                </span>
+                <span className="mt-1 block truncate text-sm">{site.contact.address}</span>
               </span>
               <span className="inline-flex w-fit max-w-full items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
                 Apri su Maps
@@ -658,7 +619,6 @@ function PracticalInfo() {
   );
 }
 
-
 function InfoRow({
   icon: Icon,
   label,
@@ -670,25 +630,26 @@ function InfoRow({
   value: string;
   href?: string;
 }) {
-  const content = (
-    <div className="flex items-start gap-4">
-      <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
-        <Icon className="h-4 w-4" />
-      </div>
-      <div className="min-w-0">
-        <dt className="text-xs uppercase tracking-widest text-muted-foreground">
+  return (
+    <div className="group">
+      <dt className="flex items-start gap-4">
+        <div className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
+          <Icon className="h-4 w-4" />
+        </div>
+        <span className="min-w-0 pt-0.5 text-xs uppercase tracking-widest text-muted-foreground">
           {label}
-        </dt>
-        <dd className="mt-1 text-[15px] text-foreground">{value}</dd>
-      </div>
+        </span>
+      </dt>
+      <dd className="-mt-5 ml-14 text-[15px] text-foreground">
+        {href ? (
+          <a href={href} className="block transition hover:text-terracotta">
+            {value}
+          </a>
+        ) : (
+          value
+        )}
+      </dd>
     </div>
-  );
-  return href ? (
-    <a href={href} className="block transition hover:text-terracotta">
-      {content}
-    </a>
-  ) : (
-    content
   );
 }
 
@@ -707,8 +668,7 @@ function FAQSection() {
             </Reveal>
             <Reveal delay={80} className="mt-4">
               <p className="text-muted-foreground">
-                Non trovi quello che cerchi? Scrivici su WhatsApp, rispondiamo in
-                breve tempo.
+                Non trovi quello che cerchi? Scrivici su WhatsApp, rispondiamo in breve tempo.
               </p>
             </Reveal>
           </div>
@@ -723,49 +683,56 @@ function FAQSection() {
 
 function FAQList({ items }: { items: readonly { q: string; a: string }[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [enhanced, setEnhanced] = useState(false);
+
+  useEffect(() => setEnhanced(true), []);
+
   return (
-    <ul className="divide-y divide-border">
+    <dl className="divide-y divide-border">
       {items.map((f, i) => {
-        const open = openIndex === i;
+        const open = !enhanced || openIndex === i;
+        const collapsed = enhanced && !open;
         const panelId = `faq-panel-${i}`;
         const btnId = `faq-btn-${i}`;
         return (
-          <Reveal key={f.q} as="li" delay={i * 70}>
-            <button
-              id={btnId}
-              type="button"
-              onClick={() => setOpenIndex(open ? null : i)}
-              aria-expanded={open}
-              aria-controls={panelId}
-              className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left transition-colors hover:text-terracotta"
-            >
-              <span className="font-display text-lg md:text-xl">{f.q}</span>
-              <span
-                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-terracotta transition-all duration-300 motion-reduce:transition-none ${
-                  open ? "rotate-180 bg-terracotta/10" : "rotate-0"
-                }`}
+          <Reveal key={f.q} delay={i * 70}>
+            <dt>
+              <button
+                id={btnId}
+                type="button"
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                aria-expanded={open}
+                aria-controls={panelId}
+                className="flex w-full cursor-pointer items-center justify-between gap-6 py-6 text-left transition-colors hover:text-terracotta"
               >
-                <ChevronDown className="h-4 w-4" />
-              </span>
-            </button>
-            <div
+                <span className="font-display text-lg md:text-xl">{f.q}</span>
+                <span
+                  aria-hidden
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-terracotta transition-all duration-300 motion-reduce:transition-none ${
+                    open ? "rotate-180 bg-terracotta/10" : "rotate-0"
+                  }`}
+                >
+                  <ChevronDown className="h-4 w-4" />
+                </span>
+              </button>
+            </dt>
+            <dd
               id={panelId}
               role="region"
               aria-labelledby={btnId}
+              aria-hidden={collapsed}
+              inert={collapsed}
               className={`grid overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none ${
                 open ? "grid-rows-[1fr] pb-6 opacity-100" : "grid-rows-[0fr] opacity-0"
               }`}
             >
               <div className="min-h-0">
-                <p className="max-w-2xl text-[15px] text-muted-foreground">
-                  {f.a}
-                </p>
+                <p className="max-w-2xl text-[15px] text-muted-foreground">{f.a}</p>
               </div>
-            </div>
+            </dd>
           </Reveal>
         );
       })}
-    </ul>
+    </dl>
   );
 }
-
