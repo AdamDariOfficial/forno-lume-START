@@ -14,9 +14,7 @@ const FOCUSABLE_SELECTOR = [
 ].join(",");
 
 function getFocusableElements(container: HTMLElement): HTMLElement[] {
-  return Array.from(
-    container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR),
-  ).filter(
+  return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
     (element) =>
       !element.closest("[inert]") &&
       element.getAttribute("aria-hidden") !== "true" &&
@@ -52,9 +50,7 @@ export function Navbar() {
       return;
     }
 
-    const ids = site.nav
-      .map((n) => idFromHref(n.href))
-      .filter((v): v is string => !!v);
+    const ids = site.nav.map((n) => idFromHref(n.href)).filter((v): v is string => !!v);
 
     const compute = () => {
       rafRef.current = null;
@@ -176,9 +172,7 @@ export function Navbar() {
 
       const activeElement = document.activeElement;
       const activeIndex =
-        activeElement instanceof HTMLElement
-          ? focusable.indexOf(activeElement)
-          : -1;
+        activeElement instanceof HTMLElement ? focusable.indexOf(activeElement) : -1;
 
       if (activeIndex === -1) {
         e.preventDefault();
@@ -243,10 +237,7 @@ export function Navbar() {
     setOpen(false);
   };
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     const id = idFromHref(href);
     if (!id) return;
     e.preventDefault();
@@ -275,7 +266,6 @@ export function Navbar() {
           : "opacity-0 -translate-y-full pointer-events-none"
       } motion-reduce:transition-opacity motion-reduce:transform-none`}
     >
-
       <div className="container-page flex h-16 items-center justify-between md:h-20">
         <Link
           to="/"
@@ -287,11 +277,7 @@ export function Navbar() {
           {site.brand.name}
         </Link>
 
-        <nav
-          inert={open}
-          className="hidden items-center gap-8 md:flex"
-          aria-label="Sezioni"
-        >
+        <nav inert={open} className="hidden items-center gap-8 md:flex" aria-label="Sezioni">
           {site.nav.map((n) => {
             const id = idFromHref(n.href);
             const isActive = !!id && active === id;
@@ -302,9 +288,7 @@ export function Navbar() {
                 onClick={(e) => handleNavClick(e, n.href)}
                 aria-current={isActive ? "true" : undefined}
                 className={`relative text-sm transition-colors ${
-                  isActive
-                    ? "text-terracotta"
-                    : "text-foreground/80 hover:text-terracotta"
+                  isActive ? "text-terracotta" : "text-foreground/80 hover:text-terracotta"
                 }`}
               >
                 {n.label}
@@ -344,7 +328,7 @@ export function Navbar() {
               setOpen(true);
             }
           }}
-          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/70 bg-background/70 backdrop-blur md:hidden"
+          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/70 bg-background/70 backdrop-blur md:hidden"
         >
           <Menu
             className={`absolute h-5 w-5 transition-all duration-300 ${
@@ -359,7 +343,6 @@ export function Navbar() {
         </button>
       </div>
 
-
       {/* Drawer */}
       <div
         ref={drawerRef}
@@ -367,10 +350,10 @@ export function Navbar() {
         aria-hidden={open ? undefined : true}
         inert={!open}
         tabIndex={-1}
-        className={`md:hidden absolute inset-x-0 top-full z-50 origin-top overflow-hidden transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`absolute inset-x-0 top-full z-50 origin-top transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
           open
-            ? "max-h-[80vh] opacity-100 translate-y-0"
-            : "max-h-0 opacity-0 -translate-y-2"
+            ? "max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain opacity-100 translate-y-0"
+            : "max-h-0 overflow-hidden opacity-0 -translate-y-2"
         }`}
       >
         <div className="container-page pb-6 pt-2">
@@ -392,10 +375,7 @@ export function Navbar() {
                   >
                     <span>{n.label}</span>
                     {isActive && (
-                      <span
-                        aria-hidden
-                        className="h-1.5 w-1.5 rounded-full bg-terracotta"
-                      />
+                      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-terracotta" />
                     )}
                   </a>
                 );
