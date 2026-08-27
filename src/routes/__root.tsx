@@ -31,7 +31,7 @@ function NotFoundComponent() {
           <div className="mt-8">
             <Link
               to="/"
-              className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium tracking-wide text-primary-foreground transition hover:opacity-90"
+              className="motion-cta inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-medium tracking-wide text-primary-foreground hover:opacity-90"
             >
               Torna alla home
             </Link>
@@ -60,13 +60,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+            className="motion-cta inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90"
           >
             Riprova
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center rounded-full border border-border bg-background px-5 py-2.5 text-sm font-medium transition hover:bg-secondary"
+            className="motion-cta inline-flex items-center justify-center rounded-full border border-border bg-background px-5 py-2.5 text-sm font-medium hover:bg-secondary"
           >
             Home
           </a>
@@ -81,31 +81,31 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Forno Lume | Bistrot e pizzeria contemporanea a Padova" },
+      { title: "Forno Lume | Bistrot e pizzeria a Padova" },
       {
         name: "description",
         content:
-          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
+          "Cucina semplice, pizza e ingredienti selezionati in un bistrot contemporaneo a Padova. Scopri il menu e prenota il tuo tavolo.",
       },
       { name: "theme-color", content: "#f5efe1" },
       { name: "robots", content: "noindex, follow" },
       {
         property: "og:title",
-        content: "Forno Lume | Bistrot e pizzeria contemporanea a Padova",
+        content: "Forno Lume | Bistrot e pizzeria a Padova",
       },
       {
         property: "og:description",
         content:
-          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
+          "Cucina semplice, pizza e ingredienti selezionati in un bistrot contemporaneo a Padova. Scopri il menu e prenota il tuo tavolo.",
       },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Forno Lume" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Forno Lume | Bistrot e pizzeria contemporanea a Padova" },
+      { name: "twitter:title", content: "Forno Lume | Bistrot e pizzeria a Padova" },
       {
         name: "twitter:description",
         content:
-          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
+          "Cucina semplice, pizza e ingredienti selezionati in un bistrot contemporaneo a Padova. Scopri il menu e prenota il tuo tavolo.",
       },
       { property: "og:image", content: SOCIAL_IMAGE_URL },
       { name: "twitter:image", content: SOCIAL_IMAGE_URL },
@@ -137,6 +137,9 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="it">
       <head>
         <HeadContent />
+        <noscript>
+          <style>{`[data-js-only] { display: none !important; }`}</style>
+        </noscript>
       </head>
       <body>
         {children}

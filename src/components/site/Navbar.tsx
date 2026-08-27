@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
-import { site, waLink } from "@/config/site";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { Menu, MessageCircle, X } from "lucide-react";
+import { site } from "@/config/site";
 import { scrollToSection } from "@/lib/nav";
+import { ContactChoiceDialog } from "./ContactChoiceDialog";
+import { HomeLogo } from "./HomeLogo";
 
 const FOCUSABLE_SELECTOR = [
   "a[href]",
@@ -101,7 +103,7 @@ export function Navbar() {
 
   // Close drawer when resizing to desktop
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
+    const mq = window.matchMedia("(min-width: 1024px)");
     const onChange = (e: MediaQueryListEvent) => {
       if (e.matches) {
         restoreFocusRef.current = false;
@@ -153,7 +155,14 @@ export function Navbar() {
       (firstFocusable ?? drawer).focus({ preventScroll: true });
     });
 
+    const getNestedDialog = () =>
+      Array.from(document.querySelectorAll<HTMLElement>('[role="dialog"][data-state="open"]')).find(
+        (dialog) => !modal.contains(dialog),
+      );
+
     const onKeyDown = (e: KeyboardEvent) => {
+      if (getNestedDialog()) return;
+
       if (e.key === "Escape") {
         e.preventDefault();
         restoreFocusRef.current = true;
@@ -189,6 +198,8 @@ export function Navbar() {
 
     const onFocusIn = (e: FocusEvent) => {
       if (e.target instanceof Node && modal.contains(e.target)) return;
+      const nestedDialog = getNestedDialog();
+      if (nestedDialog && e.target instanceof Node && nestedDialog.contains(e.target)) return;
       const firstFocusable = getFocusableElements(drawer)[0];
       (firstFocusable ?? drawer).focus({ preventScroll: true });
     };
@@ -245,7 +256,11 @@ export function Navbar() {
     if (isHome) {
       scrollToSection(id);
     } else {
-      navigate({ to: "/", state: { scrollTo: id } });
+      void navigate({
+        to: "/",
+        state: { scrollTo: id },
+        resetScroll: false,
+      });
     }
   };
 
@@ -267,17 +282,13 @@ export function Navbar() {
       } motion-reduce:transition-opacity motion-reduce:transform-none`}
     >
       <div className="container-page flex h-16 items-center justify-between md:h-20">
-        <Link
-          to="/"
+        <HomeLogo
           inert={open}
-          onClick={() => close()}
-          className="flex items-center gap-2 font-display text-xl tracking-tight sm:text-2xl"
-        >
-          <span className="inline-block h-2 w-2 rounded-full bg-terracotta" />
-          {site.brand.name}
-        </Link>
+          onActivate={() => close()}
+          className="text-xl sm:text-2xl"
+        />
 
-        <nav inert={open} className="hidden items-center gap-8 md:flex" aria-label="Sezioni">
+        <nav inert={open} className="hidden items-center gap-6 lg:flex xl:gap-8" aria-label="Sezioni">
           {site.nav.map((n) => {
             const id = idFromHref(n.href);
             const isActive = !!id && active === id;
@@ -303,15 +314,16 @@ export function Navbar() {
           })}
         </nav>
 
-        <a
-          href={waLink(site.contact.whatsappReserveMessage)}
-          target="_blank"
-          rel="noopener noreferrer"
-          inert={open}
-          className="hidden rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90 md:inline-flex"
-        >
-          Prenota un tavolo
-        </a>
+        <ContactChoiceDialog kind="booking">
+          <button
+            type="button"
+            inert={open}
+            className="motion-cta hidden items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 lg:inline-flex"
+          >
+            <MessageCircle aria-hidden className="h-4 w-4" />
+            Prenota un tavolo
+          </button>
+        </ContactChoiceDialog>
 
         <button
           ref={menuTriggerRef}
@@ -328,7 +340,7 @@ export function Navbar() {
               setOpen(true);
             }
           }}
-          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/70 bg-background/70 backdrop-blur md:hidden"
+          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/70 bg-background/70 backdrop-blur transition-colors hover:bg-secondary lg:hidden"
         >
           <Menu
             className={`absolute h-5 w-5 transition-all duration-300 ${
@@ -350,9 +362,9 @@ export function Navbar() {
         aria-hidden={open ? undefined : true}
         inert={!open}
         tabIndex={-1}
-        className={`absolute inset-x-0 top-full z-50 origin-top transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
+        className={`absolute inset-x-0 top-full z-50 origin-top transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
           open
-            ? "max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain opacity-100 translate-y-0"
+            ? "max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain opacity-100 translate-y-0 md:max-h-[calc(100dvh-5rem)]"
             : "max-h-0 overflow-hidden opacity-0 -translate-y-2"
         }`}
       >
@@ -371,7 +383,7 @@ export function Navbar() {
                     style={{ transitionDelay: `${open ? i * 40 : 0}ms` }}
                     className={`flex items-center justify-between border-b border-border/60 py-4 text-base transition-all duration-300 last:border-b-0 ${
                       open ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0"
-                    } ${isActive ? "text-terracotta" : ""}`}
+                    } ${isActive ? "text-terracotta" : "hover:text-terracotta"}`}
                   >
                     <span>{n.label}</span>
                     {isActive && (
@@ -381,15 +393,15 @@ export function Navbar() {
                 );
               })}
             </nav>
-            <a
-              href={waLink(site.contact.whatsappReserveMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => close()}
-              className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3.5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-warm)]"
-            >
-              Prenota un tavolo
-            </a>
+            <ContactChoiceDialog kind="booking">
+              <button
+                type="button"
+                className="motion-cta mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3.5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-warm)]"
+              >
+                <MessageCircle aria-hidden className="h-4 w-4" />
+                Prenota un tavolo
+              </button>
+            </ContactChoiceDialog>
           </div>
         </div>
       </div>
