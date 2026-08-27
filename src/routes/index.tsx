@@ -1,45 +1,48 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
-  ArrowUpRight,
   Clock,
   MapPin,
   Phone,
   Mail,
   MessageCircle,
   Leaf,
+  Lightbulb,
   Flame,
   Wine,
   ChevronDown,
 } from "lucide-react";
-import { useEffect, useState, type MouseEvent } from "react";
-import { useRouter, useRouterState } from "@tanstack/react-router";
+import { useEffect, useLayoutEffect, useState, type MouseEvent } from "react";
+import { useRouterState } from "@tanstack/react-router";
 
 import heroImg from "@/assets/hero.jpg";
+import heroMobileImg from "@/assets/hero-mobile.jpg";
 import aboutImg from "@/assets/about.jpg";
 import dishImg from "@/assets/dish.jpg";
-import { SITE_URL, site, waLink, mailLink, telLink } from "@/config/site";
+import { SITE_URL, site, mailLink, telLink } from "@/config/site";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
+import { ContactChoiceDialog } from "@/components/site/ContactChoiceDialog";
+import { MapEmbed } from "@/components/site/MapEmbed";
 import { scrollToSection } from "@/lib/nav";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Forno Lume | Bistrot e pizzeria contemporanea a Padova" },
+      { title: "Forno Lume | Bistrot e pizzeria a Padova" },
       {
         name: "description",
         content:
-          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
+          "Cucina semplice, pizza e ingredienti selezionati in un bistrot contemporaneo a Padova. Scopri il menu e prenota il tuo tavolo.",
       },
       {
         property: "og:title",
-        content: "Forno Lume | Bistrot e pizzeria contemporanea a Padova",
+        content: "Forno Lume | Bistrot e pizzeria a Padova",
       },
       {
         property: "og:description",
         content:
-          "Un piccolo locale contemporaneo con cucina semplice, ingredienti selezionati, pizza curata e atmosfera calda. Prenota su WhatsApp.",
+          "Cucina semplice, pizza e ingredienti selezionati in un bistrot contemporaneo a Padova. Scopri il menu e prenota il tuo tavolo.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: SITE_URL },
@@ -77,31 +80,17 @@ export const Route = createFileRoute("/")({
 });
 
 const offerIcons = [Leaf, Flame, Wine];
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 function HomePage() {
-  const router = useRouter();
   const scrollTo = useRouterState({
     select: (s) => s.location.state.scrollTo,
   });
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!scrollTo) return;
-    // Wait a frame so the target section is mounted, then scroll and clear state.
-    const id = scrollTo;
-    const t = window.setTimeout(() => {
-      scrollToSection(id);
-      router.navigate({
-        to: ".",
-        replace: true,
-        state: (prev) => {
-          const { scrollTo: _drop, ...rest } = prev;
-          return rest;
-        },
-        resetScroll: false,
-      });
-    }, 60);
-    return () => window.clearTimeout(t);
-  }, [scrollTo, router]);
+    scrollToSection(scrollTo, "auto");
+  }, [scrollTo]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -114,9 +103,9 @@ function HomePage() {
         <MenuPreview />
         <AboutSection />
         <MethodSection />
-        <CTASection />
         <PracticalInfo />
         <FAQSection />
+        <CTASection />
       </main>
       <Footer />
     </div>
@@ -142,89 +131,86 @@ function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-24 md:pt-28">
-      {/* soft warm background */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(1200px 600px at 80% -10%, oklch(0.86 0.06 60 / 0.5), transparent 60%), radial-gradient(900px 500px at -10% 20%, oklch(0.9 0.04 90 / 0.5), transparent 60%)",
-        }}
-      />
-      <div className="container-page grid gap-10 pb-16 pt-8 md:grid-cols-12 md:gap-12 md:pb-24 md:pt-14">
-        <div className="fade-up md:col-span-6 md:pt-10">
-          <p className="eyebrow">{site.brand.kicker}</p>
-          <h1 className="mt-5 text-[2.6rem] leading-[1.05] font-medium tracking-tight text-foreground sm:text-6xl md:text-[4.2rem]">
-            Cucina semplice,
-            <br />
-            <span className="italic text-terracotta">atmosfera calda</span>,
-            <br />
-            dettagli curati.
-          </h1>
-          <p className="mt-6 max-w-xl text-base text-muted-foreground md:text-lg">
-            {site.brand.description}
-          </p>
+    <section className="hero-shell">
+      <div aria-hidden className="hero-desktop-glow" />
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={waLink(site.contact.whatsappReserveMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-medium text-primary-foreground shadow-[var(--shadow-warm)] transition hover:opacity-90"
-            >
-              <MessageCircle className="h-4 w-4" />
-              Prenota su WhatsApp
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
-            <a
-              href="#menu"
-              onClick={handleMenuClick}
-              className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-6 py-3.5 text-sm font-medium transition hover:bg-secondary"
-            >
-              Scopri il menu
-            </a>
-          </div>
-
-          <div className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-border pt-6 text-xs text-muted-foreground">
-            <div className="flex flex-col gap-1">
-              <Clock className="h-4 w-4 text-terracotta" />
-              <span>
-                Mar–Dom
-                <br />
-                18:30–23:00
-              </span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <MapPin className="h-4 w-4 text-terracotta" />
-              <span>
-                Via Roma 24
-                <br />
-                Padova
-              </span>
-            </div>
-            <div className="flex flex-col gap-1">
-              <Leaf className="h-4 w-4 text-terracotta" />
-              <span>Prenotazione consigliata</span>
-            </div>
+      <div className="hero-layout">
+        <div className="hero-media">
+          <div aria-hidden className="hero-media-glow" />
+          <picture className="hero-picture">
+            <source media="(max-width: 1099px)" srcSet={heroMobileImg} />
+            <img
+              src={heroImg}
+              alt="Una pizza artigianale viene infornata nel forno a legna"
+              width={1440}
+              height={1620}
+              fetchPriority="high"
+            />
+          </picture>
+          <div aria-hidden className="hero-mobile-overlay" />
+          <div className="hero-status">
+            <span aria-hidden className="hero-status-dot" />
+            <span className="hero-status-kicker">Stasera</span>
+            <span className="hero-status-copy">Forno acceso alle 18:30</span>
           </div>
         </div>
 
-        <div className="fade-up md:col-span-6">
-          <div className="relative">
-            <div className="absolute -inset-3 -z-10 rounded-[2rem] bg-gradient-to-br from-accent/40 to-terracotta/10 blur-2xl" />
-            <div className="overflow-hidden rounded-[1.75rem] border border-border shadow-[var(--shadow-warm)]">
-              <img
-                src={heroImg}
-                alt="Interno accogliente di Forno Lume con forno a legna acceso e pizza Margherita fumante in primo piano"
-                width={1600}
-                height={1808}
-                className="h-[520px] w-full object-cover md:h-[640px]"
-              />
+        <div className="hero-copy">
+          <p className="eyebrow fade-up">{site.brand.kicker}</p>
+          <h1 className="hero-title fade-up" style={{ animationDelay: "80ms" }}>
+            <span className="hero-title-line hero-title-line-1">Cucina semplice,</span>
+            <span className="hero-title-line hero-title-line-2 italic text-terracotta">
+              atmosfera calda,
+            </span>
+            <span className="hero-title-line hero-title-line-3">dettagli curati.</span>
+          </h1>
+
+          <p className="hero-description fade-up" style={{ animationDelay: "160ms" }}>
+            {site.brand.description}
+          </p>
+
+          <div className="hero-actions fade-up" style={{ animationDelay: "240ms" }}>
+            <ContactChoiceDialog kind="booking">
+              <button type="button" className="hero-primary-cta motion-cta">
+                <MessageCircle aria-hidden className="h-4 w-4" />
+                Prenota un tavolo
+              </button>
+            </ContactChoiceDialog>
+            <a href="#menu" onClick={handleMenuClick} className="hero-menu-cta motion-cta group">
+              Scopri il menu
+              <ChevronDown aria-hidden className="menu-scroll-cue h-4 w-4" />
+            </a>
+          </div>
+
+          <div className="hero-meta fade-up" style={{ animationDelay: "320ms" }}>
+            <div className="hero-meta-item">
+              <strong>
+                <Clock aria-hidden className="h-3.5 w-3.5 text-terracotta" />
+                Orari
+              </strong>
+              <span>Mar–Dom · 18:30–23:00</span>
             </div>
-            <div className="absolute -bottom-4 left-4 hidden rounded-2xl border border-border bg-card/95 px-5 py-4 shadow-[var(--shadow-soft)] backdrop-blur sm:block md:-left-6">
-              <p className="eyebrow">Stasera</p>
-              <p className="mt-1 font-display text-lg leading-tight">Forno acceso alle 18:30</p>
+            <div className="hero-meta-item">
+              <strong>
+                <MapPin aria-hidden className="h-3.5 w-3.5 text-terracotta" />
+                Dove
+              </strong>
+              <a
+                href={site.contact.mapExternalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-sm transition-colors hover:text-terracotta"
+                aria-label={`${site.contact.area}, apri su Google Maps`}
+              >
+                {site.contact.area}
+              </a>
+            </div>
+            <div className="hero-meta-item hero-meta-advice">
+              <strong>
+                <Lightbulb aria-hidden className="h-3.5 w-3.5 text-terracotta" />
+                Consiglio
+              </strong>
+              <span>Prenota prima</span>
             </div>
           </div>
         </div>
@@ -267,9 +253,8 @@ function ExperienceSection() {
         <div className="md:col-span-7 md:pt-4">
           <Reveal delay={80}>
             <p className="text-base text-muted-foreground md:text-lg">
-              Forno Lume è pensato come un piccolo rifugio urbano. Un menu essenziale che cambia con
-              le stagioni, impasti curati, una carta dei vini selezionata e un servizio che mette a
-              proprio agio senza formalità inutili.
+              Un piccolo rifugio urbano: menu stagionale, impasti curati, vini scelti e un servizio
+              informale.
             </p>
           </Reveal>
         </div>
@@ -287,11 +272,11 @@ function OfferSection() {
           const Icon = offerIcons[i] ?? Leaf;
           return (
             <Reveal key={o.title} as="article" delay={i * 120}>
-              <div className="experience-card relative h-full overflow-hidden rounded-3xl border border-border bg-card p-7 md:p-8">
-                <div className="experience-card-icon flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
+              <div className="relative h-full overflow-hidden rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)] md:p-8">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="experience-card-title mt-6 font-display text-2xl leading-tight">
+                <h3 className="mt-6 font-display text-2xl leading-tight">
                   {o.title}
                 </h3>
                 <p className="mt-3 text-sm text-muted-foreground md:text-[15px]">{o.body}</p>
@@ -317,21 +302,16 @@ function MenuPreview() {
         className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-secondary/50 to-transparent"
       />
       <div className="container-page">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <Reveal>
-              <p className="eyebrow">Anteprima menu</p>
-              <h2 className="mt-4 text-4xl font-medium md:text-5xl">Una piccola selezione</h2>
-            </Reveal>
-          </div>
-          <div className="max-w-md">
-            <Reveal delay={80}>
-              <p className="text-sm text-muted-foreground md:text-[15px]">
-                Una selezione essenziale delle proposte più rappresentative di Forno Lume: piatti
-                semplici, lievitati curati e piccoli assaggi pensati per accompagnare la serata.
-              </p>
-            </Reveal>
-          </div>
+        <div className="max-w-2xl">
+          <Reveal>
+            <p className="eyebrow">Anteprima menu</p>
+            <h2 className="mt-4 text-4xl font-medium md:text-5xl">Una piccola selezione</h2>
+          </Reveal>
+          <Reveal delay={80} className="mt-5">
+            <p className="text-sm text-muted-foreground md:text-[15px]">
+              Una selezione essenziale tra cucina, lievitati e piccoli assaggi della serata.
+            </p>
+          </Reveal>
         </div>
 
         <div className="mt-12 grid gap-10 md:grid-cols-12">
@@ -357,26 +337,25 @@ function MenuPreview() {
               <Reveal className="overflow-hidden rounded-3xl border border-border">
                 <img
                   src={dishImg}
-                  alt="Burrata con pomodorini e basilico servita su ceramica rustica"
+                  alt="Pizza Margherita servita su un tavolo rustico"
                   loading="lazy"
-                  width={1408}
-                  height={1408}
+                  width={1400}
+                  height={1400}
                   className="h-72 w-full object-cover md:h-[440px]"
                 />
                 <div className="bg-card p-6">
                   <p className="text-sm text-muted-foreground">
-                    Vuoi scoprire cosa c'è in carta questa sera? Scrivici per prenotare il tuo
-                    tavolo.
+                    Scopri la proposta della serata e prenota il tuo tavolo.
                   </p>
-                  <a
-                    href={waLink(site.contact.whatsappReserveMessage)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition hover:opacity-90 hover:-translate-y-0.5"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    Prenota un tavolo
-                  </a>
+                  <ContactChoiceDialog kind="booking">
+                    <button
+                      type="button"
+                      className="motion-cta mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
+                    >
+                      <MessageCircle aria-hidden className="h-4 w-4" />
+                      Prenota un tavolo
+                    </button>
+                  </ContactChoiceDialog>
                 </div>
               </Reveal>
             </div>
@@ -396,10 +375,10 @@ function AboutSection() {
           <Reveal className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
             <img
               src={aboutImg}
-              alt="Le mani di un fornaio lavorano l'impasto su un tagliere di legno infarinato"
+              alt="Le mani di un pizzaiolo preparano una base con pomodoro e mozzarella"
               loading="lazy"
-              width={1408}
-              height={1600}
+              width={1200}
+              height={1500}
               className="h-[420px] w-full object-cover md:h-[560px]"
             />
           </Reveal>
@@ -415,10 +394,8 @@ function AboutSection() {
           </Reveal>
           <Reveal delay={80} className="mt-6">
             <p className="text-base text-muted-foreground md:text-lg">
-              Forno Lume nasce dall'idea di un locale piccolo, curato e sincero: pochi elementi,
-              scelti bene. Ogni dettaglio — dall'impasto al servizio, dalla luce dei tavoli alla
-              selezione degli ingredienti — è pensato per far sentire le persone accolte senza
-              formalità inutili.
+              Pochi elementi, scelti bene. Dall'impasto al servizio, ogni dettaglio è pensato per
+              accogliere con semplicità.
             </p>
           </Reveal>
           <div className="mt-8 grid grid-cols-2 gap-6 border-t border-border pt-6">
@@ -444,7 +421,7 @@ function AboutSection() {
 /* ─────────── Method / 3 steps ─────────── */
 function MethodSection() {
   return (
-    <section className="border-y border-border bg-secondary/30">
+    <section id="come-funziona" className="border-y border-border bg-secondary/30">
       <div className="container-page py-20 md:py-24">
         <Reveal className="max-w-2xl">
           <p className="eyebrow">Come funziona</p>
@@ -474,9 +451,9 @@ function MethodSection() {
 /* ─────────── Central CTA ─────────── */
 function CTASection() {
   return (
-    <section className="container-page py-20 md:py-28">
+    <section className="container-page py-14 md:py-20">
       <div
-        className="relative overflow-hidden rounded-[2rem] border border-border p-10 md:p-16"
+        className="relative overflow-hidden rounded-[2rem] border border-border p-7 sm:p-10 md:p-14"
         style={{
           background:
             "linear-gradient(135deg, oklch(0.30 0.05 40) 0%, oklch(0.42 0.10 40) 55%, oklch(0.55 0.13 45) 100%)",
@@ -503,27 +480,29 @@ function CTASection() {
           </Reveal>
           <Reveal delay={140} className="mt-5">
             <p className="max-w-lg text-base opacity-85 md:text-lg">
-              Scrivici in pochi secondi: ti confermeremo disponibilità, orari e dettagli.
+              Contattaci: confermiamo disponibilità e orario in pochi passaggi.
             </p>
           </Reveal>
           <Reveal delay={210} className="mt-8">
             <div className="flex flex-wrap gap-3">
-              <a
-                href={waLink(site.contact.whatsappReserveMessage)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 text-sm font-medium text-foreground transition hover:opacity-90"
-              >
-                <MessageCircle className="h-4 w-4" />
-                Scrivici su WhatsApp
-              </a>
-              <a
-                href={mailLink("Prenotazione Forno Lume")}
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3.5 text-sm font-medium text-primary-foreground transition hover:bg-white/10"
-              >
-                <Mail className="h-4 w-4" />
-                Contattaci via email
-              </a>
+              <ContactChoiceDialog kind="booking">
+                <button
+                  type="button"
+                  className="motion-cta inline-flex items-center gap-2 rounded-full bg-background px-6 py-3.5 text-sm font-medium text-foreground hover:opacity-90"
+                >
+                  <MessageCircle aria-hidden className="h-4 w-4" />
+                  Prenota un tavolo
+                </button>
+              </ContactChoiceDialog>
+              <ContactChoiceDialog kind="contact">
+                <button
+                  type="button"
+                  className="motion-cta inline-flex items-center gap-2 rounded-full border border-white/25 px-6 py-3.5 text-sm font-medium text-primary-foreground hover:bg-white/10"
+                >
+                  <Mail aria-hidden className="h-4 w-4" />
+                  Contattaci
+                </button>
+              </ContactChoiceDialog>
             </div>
           </Reveal>
         </div>
@@ -535,7 +514,7 @@ function CTASection() {
 /* ─────────── Practical info ─────────── */
 function PracticalInfo() {
   return (
-    <section id="info" className="container-page pb-20 md:pb-28">
+    <section id="info" className="container-page py-20 md:py-28">
       <div className="grid gap-8 md:grid-cols-12 md:gap-10">
         <div className="min-w-0 md:col-span-5">
           <Reveal>
@@ -544,14 +523,19 @@ function PracticalInfo() {
           </Reveal>
           <Reveal delay={80} className="mt-4">
             <p className="text-muted-foreground">
-              Un locale intimo nel centro di Padova. La prenotazione è consigliata, soprattutto nei
-              weekend.
+              Nel centro di Padova, vicino a Prato della Valle. Nel weekend è consigliata la
+              prenotazione.
             </p>
           </Reveal>
 
           <Reveal delay={160} className="mt-8">
             <dl className="space-y-5">
-              <InfoRow icon={MapPin} label="Indirizzo" value={site.contact.address} />
+              <InfoRow
+                icon={MapPin}
+                label="Indirizzo"
+                value={site.contact.address}
+                href={site.contact.mapExternalUrl}
+              />
               <InfoRow icon={Clock} label="Orari" value={site.contact.hours} />
               <InfoRow icon={Phone} label="Telefono" value={site.contact.phone} href={telLink()} />
               <InfoRow icon={Mail} label="Email" value={site.contact.email} href={mailLink()} />
@@ -560,58 +544,8 @@ function PracticalInfo() {
         </div>
 
         <div className="min-w-0 md:col-span-7">
-          <Reveal
-            delay={80}
-            className="max-w-full overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]"
-          >
-            <div className="relative min-w-0 max-w-full overflow-hidden">
-              <div className="relative min-h-[280px] min-w-0 max-w-full overflow-hidden sm:aspect-[16/10] md:aspect-[5/4] md:min-h-0">
-                <iframe
-                  title={site.contact.mapTitle}
-                  src={site.contact.mapEmbedUrl}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
-                  className="absolute inset-0 block h-full w-full max-w-full border-0"
-                />
-              </div>
-              {/* Desktop overlay card */}
-              <a
-                href={site.contact.mapExternalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute bottom-4 left-4 right-4 hidden items-center justify-between gap-4 rounded-2xl bg-card/95 p-4 backdrop-blur transition hover:bg-card md:flex"
-              >
-                <span>
-                  <span className="block text-xs uppercase tracking-widest text-muted-foreground">
-                    Come raggiungerci
-                  </span>
-                  <span className="mt-1 block text-sm">{site.contact.address}</span>
-                </span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
-                  Apri su Google Maps
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </span>
-              </a>
-            </div>
-            {/* Mobile inline card below map (keeps map fully visible) */}
-            <a
-              href={site.contact.mapExternalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="grid min-w-0 grid-cols-1 gap-3 border-t border-border bg-card p-4 transition hover:bg-secondary/60 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center md:hidden"
-            >
-              <span className="min-w-0">
-                <span className="block text-xs uppercase tracking-widest text-muted-foreground">
-                  Come raggiungerci
-                </span>
-                <span className="mt-1 block truncate text-sm">{site.contact.address}</span>
-              </span>
-              <span className="inline-flex w-fit max-w-full items-center gap-1 rounded-full bg-terracotta/10 px-3 py-1.5 text-xs font-medium text-terracotta">
-                Apri su Maps
-                <ArrowUpRight className="h-3.5 w-3.5" />
-              </span>
-            </a>
+          <Reveal delay={80}>
+            <MapEmbed />
           </Reveal>
         </div>
       </div>
@@ -642,7 +576,12 @@ function InfoRow({
       </dt>
       <dd className="-mt-5 ml-14 text-[15px] text-foreground">
         {href ? (
-          <a href={href} className="block transition hover:text-terracotta">
+          <a
+            href={href}
+            target={href.startsWith("http") ? "_blank" : undefined}
+            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+            className="block rounded-sm transition-colors hover:text-terracotta"
+          >
             {value}
           </a>
         ) : (
@@ -668,7 +607,7 @@ function FAQSection() {
             </Reveal>
             <Reveal delay={80} className="mt-4">
               <p className="text-muted-foreground">
-                Non trovi quello che cerchi? Scrivici su WhatsApp, rispondiamo in breve tempo.
+                Hai un dubbio? Contattaci e ti rispondiamo appena possibile.
               </p>
             </Reveal>
           </div>

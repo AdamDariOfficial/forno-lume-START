@@ -1,18 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 
-import { site, mailLink, telLink } from "@/config/site";
+import { site, mailLink, telLink, waLink } from "@/config/site";
+import { HomeLogo } from "./HomeLogo";
+
+const footerLinkClass =
+  "inline-flex w-fit items-center rounded-sm transition-colors hover:text-terracotta";
 
 export function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="container-page py-14">
-        <div className="grid gap-10 md:grid-cols-3">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_1fr_0.8fr_0.8fr]">
           <div>
-            <div className="flex items-center gap-2 font-display text-2xl">
-              <span className="inline-block h-2 w-2 rounded-full bg-terracotta" />
-              {site.brand.name}
-            </div>
+            <HomeLogo className="text-2xl" />
             <p className="mt-3 max-w-sm text-sm text-muted-foreground">
               {site.brand.tagline}
             </p>
@@ -22,17 +23,44 @@ export function Footer() {
             <p className="eyebrow">Contatti</p>
             <ul className="mt-4 space-y-2 text-foreground/80">
               <li>
-                <a className="hover:text-terracotta" href={mailLink()}>
+                <a className={footerLinkClass} href={mailLink()}>
                   {site.contact.email}
                 </a>
               </li>
               <li>
-                <a className="hover:text-terracotta" href={telLink()}>
+                <a className={footerLinkClass} href={telLink()}>
                   {site.contact.phone}
                 </a>
               </li>
-              <li>{site.contact.address}</li>
-              <li className="text-muted-foreground">{site.contact.hours}</li>
+              <li>
+                <a
+                  className={footerLinkClass}
+                  href={waLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp
+                </a>
+              </li>
+              <li>
+                <a
+                  className={footerLinkClass}
+                  href={site.contact.mapExternalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${site.contact.locationLabel}, apri su Google Maps`}
+                >
+                  {site.contact.locationLabel}
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="text-sm">
+            <p className="eyebrow">Orari</p>
+            <ul className="mt-4 space-y-2 text-foreground/80">
+              <li>{site.contact.hoursClosed}</li>
+              <li>{site.contact.hoursOpen}</li>
             </ul>
           </div>
 
@@ -40,12 +68,12 @@ export function Footer() {
             <p className="eyebrow">Legale</p>
             <ul className="mt-4 space-y-2">
               <li>
-                <Link className="hover:text-terracotta" to="/privacy">
+                <Link className={footerLinkClass} to="/privacy">
                   Privacy policy
                 </Link>
               </li>
               <li>
-                <Link className="hover:text-terracotta" to="/cookie">
+                <Link className={footerLinkClass} to="/cookie">
                   Cookie policy
                 </Link>
               </li>

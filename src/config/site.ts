@@ -3,37 +3,47 @@
 
 export const SITE_URL = "https://forno-lume.tretnix.com/";
 
+const mapQuery = "Prato della Valle, Padova";
+const encodedMapQuery = encodeURIComponent(mapQuery);
+
 export const site = {
   brand: {
     name: "Forno Lume",
     tagline: "Cucina semplice, atmosfera calda, dettagli curati.",
     description:
-      "Forno Lume è un piccolo locale contemporaneo dove sapori autentici, ingredienti selezionati e accoglienza si incontrano in un'esperienza essenziale ma memorabile.",
+      "Cucina essenziale, ingredienti selezionati e un'atmosfera calda nel cuore di Padova.",
     kicker: "Bistrot · Pizzeria · Padova",
   },
   contact: {
-    whatsappNumber: "+39 000 000 0000",
+    whatsappNumber: "+39 049 000 0000",
     // international format without + or spaces for wa.me
-    whatsappLink: "https://wa.me/390000000000",
+    whatsappLink: "https://wa.me/390490000000",
     whatsappReserveMessage:
       "Ciao! Vorrei prenotare un tavolo da Forno Lume.",
     whatsappMenuMessage:
       "Ciao! Potreste inviarmi la proposta del menu di oggi?",
-    email: "info@fornolume.it",
-    phone: "+39 000 000 0000",
-    address: "Via Roma 24, Padova",
+    email: "info@fornolume.example",
+    phone: "+39 049 000 0000",
+    city: "Padova centro",
+    area: "Prato della Valle",
+    locationLabel: "Padova centro · zona Prato della Valle",
+    locationDetail:
+      "Una zona centrale e facilmente raggiungibile. L'indirizzo esatto viene confermato al momento della prenotazione.",
+    address: "Padova centro · zona Prato della Valle",
     hours: "Mar–Dom 18:30–23:00 · Lun chiuso",
-    mapTitle: "Mappa: Forno Lume — Via Roma 24, Padova",
-    mapEmbedUrl:
-      "https://www.google.com/maps?q=Via%20Roma%2024%2C%20Padova&output=embed",
-    mapExternalUrl:
-      "https://www.google.com/maps/search/?api=1&query=Via%20Roma%2024%2C%20Padova",
+    hoursClosed: "Lun chiuso",
+    hoursOpen: "Mar–Dom 18:30–23:00",
+    mapQuery,
+    mapTitle: "Mappa interattiva dell'area di Prato della Valle, Padova",
+    mapEmbedUrl: `https://www.google.com/maps?q=${encodedMapQuery}&z=15&output=embed`,
+    mapExternalUrl: `https://www.google.com/maps/search/?api=1&query=${encodedMapQuery}`,
   },
   nav: [
     { href: "#esperienza", label: "Esperienza" },
     { href: "#menu", label: "Menu" },
     { href: "#chi-siamo", label: "Chi siamo" },
-    { href: "#info", label: "Info" },
+    { href: "#come-funziona", label: "Come funziona" },
+    { href: "#info", label: "Dove siamo" },
     { href: "#faq", label: "FAQ" },
   ],
   trust: [
@@ -45,17 +55,17 @@ export const site = {
   offer: [
     {
       title: "Cucina di stagione",
-      body: "Piatti semplici, ingredienti scelti e preparazioni curate per valorizzare ogni periodo dell'anno.",
+      body: "Piatti essenziali e ingredienti scelti, seguendo il ritmo delle stagioni.",
       detail: "Materie prime locali",
     },
     {
       title: "Pizza e lievitati",
-      body: "Impasti lavorati con attenzione, cotture fragranti e abbinamenti essenziali ma riconoscibili.",
+      body: "Impasti curati, cotture fragranti e abbinamenti semplici ma riconoscibili.",
       detail: "Forno a legna",
     },
     {
       title: "Aperitivi e serate",
-      body: "Un ambiente caldo dove fermarsi per un calice, condividere qualcosa di buono e vivere la serata con calma.",
+      body: "Un ambiente caldo per un calice, qualcosa da condividere e una serata senza fretta.",
       detail: "Carta dei vini curata",
     },
   ],
@@ -95,39 +105,39 @@ export const site = {
     {
       step: "01",
       title: "Scegli il momento",
-      body: "Decidi quando passare da noi: per una cena tranquilla, un aperitivo o una serata informale.",
+      body: "Cena, aperitivo o serata informale: scegli quando passare.",
     },
     {
       step: "02",
-      title: "Prenota con un messaggio",
-      body: "Scrivici su WhatsApp e ti confermiamo disponibilità, orario e dettagli.",
+      title: "Prenota in un attimo",
+      body: "Scegli WhatsApp o telefono: confermiamo disponibilità e orario.",
     },
     {
       step: "03",
       title: "Vivi l'esperienza",
-      body: "Arriva, siediti e goditi cucina semplice, servizio attento e atmosfera calda.",
+      body: "Siediti e goditi cucina semplice, servizio attento e atmosfera calda.",
     },
   ],
   faq: [
     {
       q: "È consigliata la prenotazione?",
-      a: "Sì, soprattutto nel weekend. Puoi scriverci su WhatsApp per verificare disponibilità e orari.",
+      a: "Sì, soprattutto nel weekend. Puoi prenotare via WhatsApp o telefono.",
     },
     {
       q: "Fate anche asporto?",
-      a: "Sì, alcune proposte sono disponibili anche da asporto. Scrivici per sapere cosa è disponibile oggi.",
+      a: "Sì, alcune proposte sono disponibili da asporto. Contattaci per la disponibilità del giorno.",
     },
     {
       q: "Avete opzioni vegetariane?",
-      a: "Sì, il menu include proposte vegetariane e piatti stagionali. La disponibilità può cambiare in base agli ingredienti.",
+      a: "Sì, ci sono proposte vegetariane e stagionali, variabili secondo gli ingredienti disponibili.",
     },
     {
       q: "Posso organizzare una piccola cena di gruppo?",
-      a: "Sì, accogliamo piccoli gruppi su prenotazione. Contattaci in anticipo così possiamo organizzare al meglio tavoli e orari.",
+      a: "Sì, accogliamo piccoli gruppi su prenotazione. Contattaci in anticipo per organizzare tavoli e orari.",
     },
     {
       q: "Come posso contattarvi?",
-      a: "Il modo più veloce è WhatsApp. In alternativa puoi scriverci via email o chiamarci negli orari di apertura.",
+      a: "Per informazioni puoi scegliere email o telefono; per prenotare, WhatsApp o telefono.",
     },
   ],
   legal: {
