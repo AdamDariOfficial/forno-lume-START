@@ -369,7 +369,10 @@ function MenuPreview() {
 /* ─────────── About ─────────── */
 function AboutSection() {
   return (
-    <section id="chi-siamo" className="container-page py-20 md:py-28">
+    <section
+      id="chi-siamo"
+      className="container-page py-20 md:pt-28 md:pb-20 min-[1100px]:py-28"
+    >
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
         <div className="order-2 md:order-1 md:col-span-6">
           <Reveal className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
@@ -422,20 +425,20 @@ function AboutSection() {
 function MethodSection() {
   return (
     <section id="come-funziona" className="border-y border-border bg-secondary/30">
-      <div className="container-page py-20 md:py-24">
+      <div className="container-page py-20 min-[1100px]:py-24">
         <Reveal className="max-w-2xl">
           <p className="eyebrow">Come funziona</p>
           <h2 className="mt-4 text-3xl font-medium md:text-4xl">
             Da un messaggio al tavolo, in pochi minuti.
           </h2>
         </Reveal>
-        <div className="mt-12 grid gap-8 md:grid-cols-3 md:gap-6">
+        <div className="mt-12 grid gap-8 min-[900px]:grid-cols-3 min-[900px]:gap-6">
           {site.experience.map((s, i) => (
             <Reveal key={s.step} delay={i * 140} className="relative">
               <div className="flex items-center gap-4">
                 <span className="font-display text-4xl text-terracotta">{s.step}</span>
                 {i < site.experience.length - 1 && (
-                  <span aria-hidden className="hidden h-px flex-1 bg-border md:block" />
+                  <span aria-hidden className="hidden h-px flex-1 bg-border min-[900px]:block" />
                 )}
               </div>
               <h3 className="mt-5 font-display text-2xl leading-tight">{s.title}</h3>
@@ -514,9 +517,9 @@ function CTASection() {
 /* ─────────── Practical info ─────────── */
 function PracticalInfo() {
   return (
-    <section id="info" className="container-page py-20 md:py-28">
-      <div className="grid gap-8 md:grid-cols-12 md:gap-10">
-        <div className="min-w-0 md:col-span-5">
+    <section id="info" className="container-page py-20 md:py-24 min-[1100px]:py-28">
+      <div className="grid gap-10 min-[1100px]:grid-cols-12">
+        <div className="min-w-0 max-w-2xl min-[1100px]:col-span-5 min-[1100px]:max-w-none">
           <Reveal>
             <p className="eyebrow">Informazioni pratiche</p>
             <h2 className="mt-4 text-4xl font-medium md:text-5xl">Dove siamo</h2>
@@ -543,7 +546,7 @@ function PracticalInfo() {
           </Reveal>
         </div>
 
-        <div className="min-w-0 md:col-span-7">
+        <div className="min-w-0 min-[1100px]:col-span-7">
           <Reveal delay={80}>
             <MapEmbed />
           </Reveal>
@@ -596,9 +599,9 @@ function InfoRow({
 function FAQSection() {
   return (
     <section id="faq" className="border-t border-border bg-secondary/30">
-      <div className="container-page py-20 md:py-28">
-        <div className="grid gap-12 md:grid-cols-12">
-          <div className="md:col-span-4">
+      <div className="container-page py-20 min-[1100px]:py-28">
+        <div className="grid gap-10 min-[1100px]:grid-cols-12 min-[1100px]:gap-12">
+          <div className="max-w-2xl min-[1100px]:col-span-4 min-[1100px]:max-w-none">
             <Reveal>
               <p className="eyebrow">Domande frequenti</p>
               <h2 className="mt-4 text-4xl font-medium leading-[1.1] md:text-5xl">
@@ -611,7 +614,7 @@ function FAQSection() {
               </p>
             </Reveal>
           </div>
-          <div className="md:col-span-8">
+          <div className="min-[1100px]:col-span-8">
             <FAQList items={site.faq} />
           </div>
         </div>

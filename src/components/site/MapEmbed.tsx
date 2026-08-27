@@ -9,7 +9,7 @@ export function MapEmbed() {
   return (
     <div className="max-w-full overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
       <div
-        className="relative min-h-[280px] min-w-0 max-w-full overflow-hidden bg-secondary/35 sm:aspect-[16/10] md:aspect-[5/4] md:min-h-0"
+        className="relative min-h-[280px] min-w-0 max-w-full overflow-hidden bg-secondary/35 sm:aspect-[16/10] min-[1100px]:aspect-[5/4] min-[1100px]:min-h-0"
         aria-live="polite"
       >
         {mapActive ? (
