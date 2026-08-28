@@ -33,6 +33,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const [reviewsPreviewVisible, setReviewsPreviewVisible] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const rafRef = useRef<number | null>(null);
@@ -43,6 +44,17 @@ export function Navbar() {
   const wasOpenRef = useRef(false);
 
   const isHome = pathname === "/";
+  const reviewNavVisible = site.googleReviews.enabled || (isHome && reviewsPreviewVisible);
+  const navItems = site.nav.filter(
+    (item) => item.href !== "#recensioni" || reviewNavVisible,
+  );
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    setReviewsPreviewVisible(
+      new URLSearchParams(window.location.search).get("reviewsPreview") === "1",
+    );
+  }, []);
 
   // Scroll-spy + visibility (home only). Elsewhere navbar is always visible.
   useEffect(() => {
@@ -52,7 +64,10 @@ export function Navbar() {
       return;
     }
 
-    const ids = site.nav.map((n) => idFromHref(n.href)).filter((v): v is string => !!v);
+    const ids = site.nav
+      .filter((item) => item.href !== "#recensioni" || reviewNavVisible)
+      .map((n) => idFromHref(n.href))
+      .filter((v): v is string => !!v);
 
     const compute = () => {
       rafRef.current = null;
@@ -99,11 +114,11 @@ export function Navbar() {
       window.removeEventListener("resize", onScroll);
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
     };
-  }, [isHome]);
+  }, [isHome, reviewNavVisible]);
 
   // Close drawer when resizing to desktop
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
+    const mq = window.matchMedia("(min-width: 1100px)");
     const onChange = (e: MediaQueryListEvent) => {
       if (e.matches) {
         restoreFocusRef.current = false;
@@ -288,8 +303,8 @@ export function Navbar() {
           className="text-xl sm:text-2xl"
         />
 
-        <nav inert={open} className="hidden items-center gap-6 lg:flex xl:gap-8" aria-label="Sezioni">
-          {site.nav.map((n) => {
+        <nav inert={open} className="hidden items-center gap-6 min-[1100px]:flex xl:gap-8" aria-label="Sezioni">
+          {navItems.map((n) => {
             const id = idFromHref(n.href);
             const isActive = !!id && active === id;
             return (
@@ -318,7 +333,7 @@ export function Navbar() {
           <button
             type="button"
             inert={open}
-            className="motion-cta hidden items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 lg:inline-flex"
+            className="motion-cta hidden items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:opacity-90 min-[1100px]:inline-flex"
           >
             <MessageCircle aria-hidden className="h-4 w-4" />
             Prenota un tavolo
@@ -340,7 +355,7 @@ export function Navbar() {
               setOpen(true);
             }
           }}
-          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/70 bg-background/70 backdrop-blur transition-colors hover:bg-secondary lg:hidden"
+          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/70 bg-background/70 backdrop-blur transition-colors hover:bg-secondary min-[1100px]:hidden"
         >
           <Menu
             className={`absolute h-5 w-5 transition-all duration-300 ${
@@ -362,7 +377,7 @@ export function Navbar() {
         aria-hidden={open ? undefined : true}
         inert={!open}
         tabIndex={-1}
-        className={`absolute inset-x-0 top-full z-50 origin-top transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${
+        className={`absolute inset-x-0 top-full z-50 origin-top transition-all duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] min-[1100px]:hidden ${
           open
             ? "max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain opacity-100 translate-y-0 md:max-h-[calc(100dvh-5rem)]"
             : "max-h-0 overflow-hidden opacity-0 -translate-y-2"
@@ -371,7 +386,7 @@ export function Navbar() {
         <div className="container-page pb-6 pt-2">
           <div className="rounded-2xl border border-border bg-card/95 p-4 shadow-[var(--shadow-soft)] backdrop-blur">
             <nav className="flex flex-col" aria-label="Sezioni mobile">
-              {site.nav.map((n, i) => {
+              {navItems.map((n, i) => {
                 const id = idFromHref(n.href);
                 const isActive = !!id && active === id;
                 return (
