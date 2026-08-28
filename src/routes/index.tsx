@@ -10,6 +10,9 @@ import {
   Flame,
   Wine,
   ChevronDown,
+  ExternalLink,
+  Quote,
+  Star,
 } from "lucide-react";
 import { useEffect, useLayoutEffect, useState, type MouseEvent } from "react";
 import { useRouterState } from "@tanstack/react-router";
@@ -18,7 +21,7 @@ import heroImg from "@/assets/hero.jpg";
 import heroMobileImg from "@/assets/hero-mobile.jpg";
 import aboutImg from "@/assets/about.jpg";
 import dishImg from "@/assets/dish.jpg";
-import { SITE_URL, site, mailLink, telLink } from "@/config/site";
+import { SITE_URL, googleReviewsPreview, site, mailLink, telLink } from "@/config/site";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
@@ -105,6 +108,7 @@ function HomePage() {
         <MethodSection />
         <PracticalInfo />
         <FAQSection />
+        <ReviewsSection />
         <CTASection />
       </main>
       <Footer />
@@ -178,7 +182,9 @@ function Hero() {
             </ContactChoiceDialog>
             <a href="#menu" onClick={handleMenuClick} className="hero-menu-cta motion-cta group">
               Scopri il menu
-              <ChevronDown aria-hidden className="menu-scroll-cue h-4 w-4" />
+              <span aria-hidden className="menu-scroll-hover">
+                <ChevronDown className="menu-scroll-cue h-4 w-4" />
+              </span>
             </a>
           </div>
 
@@ -267,20 +273,43 @@ function ExperienceSection() {
 function OfferSection() {
   return (
     <section className="container-page pb-8 md:pb-16">
-      <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+      <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 min-[1100px]:grid-cols-3">
         {site.offer.map((o, i) => {
           const Icon = offerIcons[i] ?? Leaf;
+          const wideTabletCard = i === site.offer.length - 1;
+
           return (
-            <Reveal key={o.title} as="article" delay={i * 120}>
-              <div className="relative h-full overflow-hidden rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)] md:p-8">
+            <Reveal
+              key={o.title}
+              as="article"
+              delay={i * 120}
+              className={wideTabletCard ? "sm:col-span-2 min-[1100px]:col-span-1" : ""}
+            >
+              <div
+                className={`relative h-full overflow-hidden rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)] sm:p-8 ${
+                  wideTabletCard
+                    ? "sm:grid sm:grid-cols-[auto_minmax(0,1fr)] sm:gap-x-6 min-[1100px]:block"
+                    : ""
+                }`}
+              >
                 <div className="flex h-11 w-11 items-center justify-center rounded-full bg-terracotta/10 text-terracotta">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-6 font-display text-2xl leading-tight">
-                  {o.title}
-                </h3>
-                <p className="mt-3 text-sm text-muted-foreground md:text-[15px]">{o.body}</p>
-                <div className="mt-8 flex items-center gap-2 border-t border-border pt-4 text-xs uppercase tracking-widest text-muted-foreground">
+                <div className={wideTabletCard ? "sm:min-w-0" : ""}>
+                  <h3
+                    className={`mt-6 font-display text-2xl leading-tight ${
+                      wideTabletCard ? "sm:mt-0 min-[1100px]:mt-6" : ""
+                    }`}
+                  >
+                    {o.title}
+                  </h3>
+                  <p className="mt-3 text-sm text-muted-foreground md:text-[15px]">{o.body}</p>
+                </div>
+                <div
+                  className={`mt-8 flex items-center gap-2 border-t border-border pt-4 text-xs uppercase tracking-widest text-muted-foreground ${
+                    wideTabletCard ? "sm:col-span-2 sm:mt-6 min-[1100px]:mt-8" : ""
+                  }`}
+                >
                   <span className="h-px w-6 bg-terracotta" />
                   {o.detail}
                 </div>
@@ -619,6 +648,153 @@ function FAQSection() {
           </div>
         </div>
       </div>
+    </section>
+  );
+}
+
+/* ─────────── Optional Google reviews ─────────── */
+function ReviewsSection() {
+  const [previewEnabled, setPreviewEnabled] = useState(false);
+
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    setPreviewEnabled(new URLSearchParams(window.location.search).get("reviewsPreview") === "1");
+  }, []);
+
+  const config = previewEnabled ? googleReviewsPreview : site.googleReviews;
+  const reviews = config.reviews.slice(0, 3);
+
+  if (!config.enabled || reviews.length === 0) return null;
+
+  const roundedAverage = Math.round(config.averageRating);
+  const hasSummary = config.averageRating > 0 || config.reviewCount > 0;
+
+  return (
+    <section
+      id="recensioni"
+      className="container-page pt-20 pb-6 md:pt-24 md:pb-8 min-[1100px]:pt-28 min-[1100px]:pb-10"
+    >
+      <div className="grid gap-7 min-[1100px]:grid-cols-12 min-[1100px]:items-end">
+        <Reveal className="max-w-2xl min-[1100px]:col-span-7">
+          <p className="eyebrow">Recensioni Google</p>
+          <h2 className="mt-4 text-4xl font-medium leading-[1.08] md:text-5xl">
+            Le parole di chi
+            <br />
+            <span className="italic text-terracotta">è stato qui.</span>
+          </h2>
+        </Reveal>
+
+        {hasSummary && (
+          <Reveal
+            delay={80}
+            className="min-[1100px]:col-span-5 min-[1100px]:justify-self-end"
+          >
+            <div className="inline-flex flex-wrap items-center gap-x-3 gap-y-2 rounded-full border border-border bg-card px-4 py-3 text-sm shadow-[var(--shadow-soft)]">
+              {config.averageRating > 0 && (
+                <>
+                  <span
+                    className="flex items-center gap-0.5 text-terracotta"
+                    aria-label={`${config.averageRating.toLocaleString("it-IT")} stelle su 5`}
+                  >
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Star
+                        key={i}
+                        aria-hidden
+                        className={`h-4 w-4 ${i < roundedAverage ? "fill-current" : "opacity-30"}`}
+                      />
+                    ))}
+                  </span>
+                  <strong className="font-display text-lg font-medium text-foreground">
+                    {config.averageRating.toLocaleString("it-IT", {
+                      minimumFractionDigits: 1,
+                      maximumFractionDigits: 1,
+                    })}
+                  </strong>
+                </>
+              )}
+              {config.reviewCount > 0 && (
+                <span className="text-muted-foreground">
+                  {config.reviewCount.toLocaleString("it-IT")} recensioni
+                </span>
+              )}
+            </div>
+          </Reveal>
+        )}
+      </div>
+
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 sm:gap-6 min-[1100px]:grid-cols-3">
+        {reviews.map((review, i) => (
+          <Reveal
+            key={`${review.author}-${i}`}
+            as="article"
+            delay={i * 100}
+            className={i === 2 ? "sm:col-span-2 min-[1100px]:col-span-1" : ""}
+          >
+            <div className="flex h-full flex-col rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)] sm:p-8">
+              <div className="flex items-start justify-between gap-4">
+                <span
+                  className="flex items-center gap-0.5 text-terracotta"
+                  aria-label={`${review.rating} stelle su 5`}
+                >
+                  {Array.from({ length: 5 }, (_, starIndex) => (
+                    <Star
+                      key={starIndex}
+                      aria-hidden
+                      className={`h-4 w-4 ${
+                        starIndex < review.rating ? "fill-current" : "opacity-25"
+                      }`}
+                    />
+                  ))}
+                </span>
+                <Quote aria-hidden className="h-6 w-6 text-terracotta/45" strokeWidth={1.5} />
+              </div>
+
+              <blockquote className="mt-6 font-display text-xl leading-relaxed text-foreground">
+                “{review.text}”
+              </blockquote>
+
+              <div className="mt-auto flex flex-wrap items-end justify-between gap-4 border-t border-border pt-6 text-sm">
+                <div>
+                  <p className="font-medium text-foreground">{review.author}</p>
+                  {review.dateLabel && (
+                    <p className="mt-1 text-xs text-muted-foreground">{review.dateLabel}</p>
+                  )}
+                </div>
+                {review.reviewUrl ? (
+                  <a
+                    href={review.reviewUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center gap-1.5 rounded-sm px-1 text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-terracotta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                    aria-label={`Apri la recensione di ${review.author} su Google`}
+                  >
+                    Google
+                    <ExternalLink aria-hidden className="h-3.5 w-3.5" />
+                  </a>
+                ) : (
+                  <span className="text-xs uppercase tracking-widest text-muted-foreground">
+                    Google
+                  </span>
+                )}
+              </div>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+
+      {config.profileUrl && (
+        <Reveal delay={140} className="mt-8">
+          <a
+            href={config.profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="motion-cta inline-flex min-h-11 items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-foreground hover:border-terracotta/35 hover:text-terracotta"
+          >
+            Vedi tutte le recensioni su Google
+            <ExternalLink aria-hidden className="h-4 w-4" />
+          </a>
+        </Reveal>
+      )}
     </section>
   );
 }

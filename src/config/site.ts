@@ -6,6 +6,22 @@ export const SITE_URL = "https://forno-lume.tretnix.com/";
 const mapQuery = "Prato della Valle, Padova";
 const encodedMapQuery = encodeURIComponent(mapQuery);
 
+export type GoogleReview = {
+  author: string;
+  rating: 1 | 2 | 3 | 4 | 5;
+  text: string;
+  dateLabel?: string;
+  reviewUrl?: string;
+};
+
+export type GoogleReviewsConfig = {
+  enabled: boolean;
+  averageRating: number;
+  reviewCount: number;
+  profileUrl: string;
+  reviews: GoogleReview[];
+};
+
 export const site = {
   brand: {
     name: "Forno Lume",
@@ -45,6 +61,7 @@ export const site = {
     { href: "#come-funziona", label: "Come funziona" },
     { href: "#info", label: "Dove siamo" },
     { href: "#faq", label: "FAQ" },
+    { href: "#recensioni", label: "Recensioni" },
   ],
   trust: [
     { label: "Ingredienti selezionati" },
@@ -118,6 +135,15 @@ export const site = {
       body: "Siediti e goditi cucina semplice, servizio attento e atmosfera calda.",
     },
   ],
+  // Optional client-provided Google reviews. Keep disabled until real review data is supplied.
+  // Never publish invented reviewers, ratings or review copy.
+  googleReviews: {
+    enabled: false as boolean,
+    averageRating: 0,
+    reviewCount: 0,
+    profileUrl: "",
+    reviews: [] as GoogleReview[],
+  } as GoogleReviewsConfig,
   faq: [
     {
       q: "È consigliata la prenotazione?",
@@ -145,6 +171,39 @@ export const site = {
     lastUpdate: "Gennaio 2026",
   },
 } as const;
+
+// Local-only visual fixture for reviewing the Google reviews component.
+// It is activated only by the development-only ?reviewsPreview=1 flag in the home route.
+// Real START projects should keep site.googleReviews populated only with authentic client reviews.
+export const googleReviewsPreview: GoogleReviewsConfig = {
+  enabled: true,
+  averageRating: 4.8,
+  reviewCount: 127,
+  profileUrl: "https://www.google.com/maps",
+  reviews: [
+    {
+      author: "Marco R.",
+      rating: 5,
+      text: "Impasto leggero, ingredienti curati e un'atmosfera davvero piacevole. Ci siamo fermati anche per un calice dopo cena e torneremo volentieri.",
+      dateLabel: "2 settimane fa",
+      reviewUrl: "https://www.google.com/maps",
+    },
+    {
+      author: "Giulia P.",
+      rating: 5,
+      text: "Locale raccolto e accogliente, servizio attento senza essere invadente. La pizza era fragrante e gli abbinamenti molto equilibrati.",
+      dateLabel: "1 mese fa",
+      reviewUrl: "https://www.google.com/maps",
+    },
+    {
+      author: "Andrea M.",
+      rating: 4,
+      text: "Una bella scoperta in centro: menu essenziale, materie prime ben scelte e tempi giusti. Perfetto per una cena tranquilla o un aperitivo lungo.",
+      dateLabel: "2 mesi fa",
+      reviewUrl: "https://www.google.com/maps",
+    },
+  ],
+};
 
 export const waLink = (message?: string) => {
   const base = site.contact.whatsappLink;

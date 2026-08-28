@@ -200,9 +200,14 @@
   }
 }
 
+.menu-scroll-hover {
+  display: inline-flex;
+  transform: translateY(0);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .menu-scroll-cue {
   animation: menuScrollCue 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Scroll reveal — subtle, premium, non-invasive */
@@ -259,9 +264,12 @@
     box-shadow: 0 14px 42px -30px oklch(0.35 0.06 60 / 0.3);
   }
 
-  .group:hover .menu-scroll-cue {
-    animation: none;
+  .group:hover .menu-scroll-hover {
     transform: translateY(2px);
+  }
+
+  .group:hover .menu-scroll-cue {
+    animation-play-state: paused;
   }
 }
 
@@ -288,10 +296,12 @@
   .motion-cta:hover,
   .interactive-card,
   .interactive-card:hover,
-  .menu-scroll-cue,
-  .group:hover .menu-scroll-cue {
+  .menu-scroll-hover,
+  .group:hover .menu-scroll-hover,
+  .menu-scroll-cue {
     animation: none !important;
     transform: none !important;
+    transition: none !important;
   }
   html {
     scroll-behavior: auto;
