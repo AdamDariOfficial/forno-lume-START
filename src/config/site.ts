@@ -57,17 +57,11 @@ export const site = {
   nav: [
     { href: "#esperienza", label: "Esperienza" },
     { href: "#menu", label: "Menu" },
-    { href: "#chi-siamo", label: "Chi siamo" },
     { href: "#come-funziona", label: "Come funziona" },
+    { href: "#chi-siamo", label: "Chi siamo" },
     { href: "#info", label: "Dove siamo" },
     { href: "#faq", label: "FAQ" },
     { href: "#recensioni", label: "Recensioni" },
-  ],
-  trust: [
-    { label: "Ingredienti selezionati" },
-    { label: "Impasti curati" },
-    { label: "Atmosfera accogliente" },
-    { label: "Prenotazione veloce" },
   ],
   offer: [
     {

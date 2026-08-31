@@ -100,12 +100,11 @@ function HomePage() {
       <Navbar />
       <main>
         <Hero />
-        <TrustStrip />
         <ExperienceSection />
         <OfferSection />
         <MenuPreview />
-        <AboutSection />
         <MethodSection />
+        <AboutSection />
         <PracticalInfo />
         <FAQSection />
         <ReviewsSection />
@@ -225,26 +224,10 @@ function Hero() {
   );
 }
 
-/* ─────────── Trust strip ─────────── */
-function TrustStrip() {
-  return (
-    <section className="border-y border-border bg-secondary/40">
-      <div className="container-page grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:gap-4 md:py-10">
-        {site.trust.map((t) => (
-          <div key={t.label} className="flex items-center gap-3 text-sm md:justify-center">
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-terracotta" />
-            <span className="text-foreground/80">{t.label}</span>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 /* ─────────── Experience anchor section (offering intro) ─────────── */
 function ExperienceSection() {
   return (
-    <section id="esperienza" className="container-page py-20 md:py-28">
+    <section id="esperienza" className="container-page pt-16 pb-12 md:pt-20 md:pb-16 min-[1100px]:pt-24">
       <div className="grid gap-10 md:grid-cols-12">
         <div className="md:col-span-5">
           <Reveal>
@@ -272,7 +255,7 @@ function ExperienceSection() {
 /* ─────────── Offer / three cards ─────────── */
 function OfferSection() {
   return (
-    <section className="container-page pb-8 md:pb-16">
+    <section className="container-page pb-6 md:pb-10 min-[1100px]:pb-12">
       <div className="grid gap-5 sm:grid-cols-2 sm:gap-6 min-[1100px]:grid-cols-3">
         {site.offer.map((o, i) => {
           const Icon = offerIcons[i] ?? Leaf;
@@ -325,7 +308,7 @@ function OfferSection() {
 /* ─────────── Menu preview ─────────── */
 function MenuPreview() {
   return (
-    <section id="menu" className="relative py-20 md:py-28">
+    <section id="menu" className="relative pt-16 pb-12 md:pt-20 md:pb-14 min-[1100px]:pb-16">
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-secondary/50 to-transparent"
@@ -400,7 +383,7 @@ function AboutSection() {
   return (
     <section
       id="chi-siamo"
-      className="container-page py-20 md:pt-28 md:pb-20 min-[1100px]:py-28"
+      className="container-page pt-12 pb-16 md:pt-16 md:pb-16 min-[1100px]:pt-20 min-[1100px]:pb-20"
     >
       <div className="grid gap-12 md:grid-cols-12 md:gap-16">
         <div className="order-2 md:order-1 md:col-span-6">
@@ -454,7 +437,7 @@ function AboutSection() {
 function MethodSection() {
   return (
     <section id="come-funziona" className="border-y border-border bg-secondary/30">
-      <div className="container-page py-20 min-[1100px]:py-24">
+      <div className="container-page py-16 min-[1100px]:py-20">
         <Reveal className="max-w-2xl">
           <p className="eyebrow">Come funziona</p>
           <h2 className="mt-4 text-3xl font-medium md:text-4xl">
@@ -483,7 +466,7 @@ function MethodSection() {
 /* ─────────── Central CTA ─────────── */
 function CTASection() {
   return (
-    <section className="container-page py-14 md:py-20">
+    <section className="container-page pt-12 pb-14 md:pt-16 md:pb-20 min-[1100px]:pt-20">
       <div
         className="relative overflow-hidden rounded-[2rem] border border-border p-7 sm:p-10 md:p-14"
         style={{
@@ -546,7 +529,7 @@ function CTASection() {
 /* ─────────── Practical info ─────────── */
 function PracticalInfo() {
   return (
-    <section id="info" className="container-page py-20 md:py-24 min-[1100px]:py-28">
+    <section id="info" className="container-page pt-12 pb-16 md:pt-16 md:pb-16 min-[1100px]:pt-20">
       <div className="grid gap-10 min-[1100px]:grid-cols-12">
         <div className="min-w-0 max-w-2xl min-[1100px]:col-span-5 min-[1100px]:max-w-none">
           <Reveal>
@@ -628,7 +611,7 @@ function InfoRow({
 function FAQSection() {
   return (
     <section id="faq" className="border-t border-border bg-secondary/30">
-      <div className="container-page py-20 min-[1100px]:py-28">
+      <div className="container-page pt-12 pb-16 md:pt-16 md:pb-16 min-[1100px]:pt-16">
         <div className="grid gap-10 min-[1100px]:grid-cols-12 min-[1100px]:gap-12">
           <div className="max-w-2xl min-[1100px]:col-span-4 min-[1100px]:max-w-none">
             <Reveal>
@@ -672,7 +655,7 @@ function ReviewsSection() {
   return (
     <section
       id="recensioni"
-      className="container-page pt-20 pb-6 md:pt-24 md:pb-8 min-[1100px]:pt-28 min-[1100px]:pb-10"
+      className="container-page pt-12 pb-6 md:pt-16 md:pb-8 min-[1100px]:pt-16 min-[1100px]:pb-10"
     >
       <div className="grid gap-7 min-[1100px]:grid-cols-12 min-[1100px]:items-end">
         <Reveal className="max-w-2xl min-[1100px]:col-span-7">
