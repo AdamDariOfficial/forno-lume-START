@@ -11,7 +11,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="container-page py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_1fr_0.8fr_0.8fr]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.35fr_1fr_0.8fr]">
           <div>
             <HomeLogo className="text-2xl" />
             <p className="mt-3 max-w-sm text-sm text-muted-foreground">
@@ -63,29 +63,21 @@ export function Footer() {
               <li>{site.contact.hoursOpen}</li>
             </ul>
           </div>
-
-          <div className="text-sm">
-            <p className="eyebrow">Legale</p>
-            <ul className="mt-4 space-y-2">
-              <li>
-                <Link className={footerLinkClass} to="/privacy">
-                  Privacy policy
-                </Link>
-              </li>
-              <li>
-                <Link className={footerLinkClass} to="/cookie">
-                  Cookie policy
-                </Link>
-              </li>
-            </ul>
-          </div>
         </div>
 
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center">
-          <p>
-            © {new Date().getFullYear()} {site.legal.company}. Tutti i diritti
-            riservati.
-          </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p>
+              © {new Date().getFullYear()} {site.legal.company}. Tutti i diritti riservati.
+            </p>
+            <Link className={footerLinkClass} to="/privacy">
+              Privacy
+            </Link>
+            <Link className={footerLinkClass} to="/cookie">
+              Cookie
+            </Link>
+          </div>
+
           <p>
             <span className="opacity-70">Progettato e sviluppato da</span>{" "}
             <a
