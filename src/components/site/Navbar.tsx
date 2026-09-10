@@ -33,7 +33,6 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState<string | null>(null);
-  const [reviewsPreviewVisible, setReviewsPreviewVisible] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const rafRef = useRef<number | null>(null);
@@ -44,17 +43,7 @@ export function Navbar() {
   const wasOpenRef = useRef(false);
 
   const isHome = pathname === "/";
-  const reviewNavVisible = site.googleReviews.enabled || (isHome && reviewsPreviewVisible);
-  const navItems = site.nav.filter(
-    (item) => item.href !== "#recensioni" || reviewNavVisible,
-  );
-
-  useEffect(() => {
-    if (!import.meta.env.DEV) return;
-    setReviewsPreviewVisible(
-      new URLSearchParams(window.location.search).get("reviewsPreview") === "1",
-    );
-  }, []);
+  const navItems = site.nav.filter((item) => item.href !== "#recensioni" || site.reviews.enabled);
 
   // Scroll-spy + visibility (home only). Elsewhere navbar is always visible.
   useEffect(() => {
@@ -65,7 +54,7 @@ export function Navbar() {
     }
 
     const ids = site.nav
-      .filter((item) => item.href !== "#recensioni" || reviewNavVisible)
+      .filter((item) => item.href !== "#recensioni" || site.reviews.enabled)
       .map((n) => idFromHref(n.href))
       .filter((v): v is string => !!v);
 
@@ -114,7 +103,7 @@ export function Navbar() {
       window.removeEventListener("resize", onScroll);
       if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
     };
-  }, [isHome, reviewNavVisible]);
+  }, [isHome]);
 
   // Close drawer when resizing to desktop
   useEffect(() => {
